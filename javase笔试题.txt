@@ -1,0 +1,918 @@
+	1 java跨平台的原理是什么?
+		因为java编译后会产生.class字节码文件，该文件可以在任意的java虚拟机上运行，
+		而java虚拟机正是跨平台的主要因素。
+	2 为什么说java具备安全性?
+		java取消了指针，程序员只能通过实例变量才操作内存。自动回收垃圾
+	3 java的三个版本是什么?分别适用哪些领域?
+		JAVA SE 核心的类库
+		JAVA EE 企业级
+		JAVA ME 微型板手机 智能机
+	4 什么是jvm?什么是jdk?什么是jre?
+		JVM(Java Virtual Machine)java虚拟机，是java实现跨平台的重要组成部分。我们的编译完的.class字节码文件都是在JVM上运行的。
+		JDK(Java Development Kit) JDK是JAVA程序运行时所需要的工具包，里面包含的JRE
+		JRE(Java Runtime Environment) JRE是Java运行时环境，JVM需要调用JRE的资源才可以进行运行
+	5 说出java中的八种基本数据类型及其字节数
+		byte 1
+		char 2
+		short 2
+		int 4
+		long 8
+		float 4
+		double 8
+		boolean 1
+	6 i++和++i的区别?
+		i++ 先运行i后+1
+		++i 先+1后运行i
+	7 &和&&的区别和联系  |和||的区别和联系
+		& 逻辑与，在进行运算的时候，无论任何情况，两边都会进行运算
+		&& 短路与 左边的操作数为false或者右边的操作数为false，那么结果一定为false，而且右边不进行运算。
+		|| 短路或 如果左边的运算成立则不运行右边的
+		| 逻辑或 及时左边的成立，右边的表达式也要运行
+	8 基本数据类型转换的规则是什么?
+		基本数据类型转换分为：自动类型转换和强制类型转换
+		自动类型转换：容量小的数据类型可以自动转换为容量大的数额类型 也就是低级别可以自动转换为高级别 byte i = 1;
+		强制类型转换：容量大的数据类型必须强制转换为容量小的数据类型，也就是高级别必须强制转换为低级别 int i = 1; byte  i = (byte)i;
+	9 if和switch的异同之处?
+		都是分支语句，可以进行判断处理
+		switch 适合多分支的判断，就是有很多条件需要判断处理，但是只能是等值判断，不能><>=<=等。
+		if 适合极少分支的判断，判断条件丰富。
+	10 break和continue的作用是什么?
+		break 是结束当前循环并跳出
+		continue 结束当前次的循环，而进入下一次循环。
+	11 请问下列代码中最终得出的结果是多少?
+		public class Test {
+		
+			 public int factorial(int n) { 
+			 if (n == 1 || n == 0){
+				return n;
+			 }else{
+				return n * factorial(n - 1);
+			 } 
+			}
+			 
+			 
+			 public static void main(String[] args) {
+				 Test test = new Test();
+				 System.out.println(test.factorial(6));
+			 }
+		}
+		6 720
+		5 120
+		4 24
+		3 6
+		2 2
+		1 
+		答案：720
+	12 递归的优缺点是什么?
+		递归往往使得程序算法简化，在使用递归的时候咬注意必须要要有一个递归结束条件，称为递归出口。
+		递归的使得程序简单，但是速度慢，而且递归的每一层都会开辟一个栈空间用来存储，过多的层容易造成栈溢出。
+	13 数据的特点是什么?什么时候使用数组?
+		连续性，有效性，安全性。
+		数组是一组相同数据类型有序的集合，在我们不需要经常增删的情况下使用数组。
+	14 手写出冒泡排序
+		int []arr = {2,1,3,5,4,6};
+		int tmp,flag;
+		for(int i = 0; i < arr.lenght - 1; i++){
+			flag = 0;
+			for(int j = 0; j < arr.lenght - i - 1; j++){
+				if(arr[j] < arr[j+1]){
+					tmp = arr[j];
+					arr[j] = arr[j+1];
+					arr[j+1] = tmp;
+					flag = 1;
+				}
+			}
+			if(flag == 0){
+				break;
+			}
+		}
+	15 什么是可变参数?他的好处是什么?
+		... 可变参数的形式
+		可以变参数只能是方法的形参
+		而且可变参数对应的实参可以是0，1，2也可以是数组。
+		可变参数的方法中，将可以变参数当作数组来处理。
+		可变参数只能有一个，也必须是最后一个。
+		优点：方便 简单 减少了方法的重载
+	16 类和对象的关系是什么?
+		类是对象的抽象，而对象是类的具体。类就好比人是一个概念，有胳膊脑子体重等，而对象就是具体，身高180；
+	17 方法的重载和方法的重写是什么?
+		方法重载是在一个类中发生的，方法名相同，返回值类型可以不同，参数列表必须不同。
+		方法重写是发生在子类与父类之间的。父类的方法无法满足子类的需求，要求方法名相同，返回值类型小于或等于，访问修饰符小于或等于，参数列表相同，不同比父类抛出更大的异常。
+	18 this和super关键字的作用是什么?
+		this代表的是对当前对象的引用，多用于区分成员变量和局部变量
+		super代表当前对象的直接父类的引用。除了私有化的。
+	19 static关键字的作用是什么（修饰变量、方法、代码块）?
+		static 关键字可以修饰 属性 方法 代码块 类
+		static修饰的属性属于这个类所有，创建对象后我们可以通过对象名.属性访问也可以通过类名.属性名访问。
+		跟实例变量的区别是：
+		1.在内存中的份数不同
+			静态变量在内存中的份数只有一份。static修饰的变量属于整个类的，也叫类变量
+			实例变量在内存中的份数由对象决定，每一个对象的实例属性都有自己的独特的一个内存来存储它。
+		2.在内存中存放的位置不同
+			类变量存储在方法区中
+			实例变量存储在堆内存中
+		3.访问方式不同
+			类变量比实例变量多一种访问方式，那就是可以通过类名.属性名进行访问。
+		4.在内存中分配空间的时间不同
+			实例变量：在创建对象的时候分配内存。
+			静态变量：第一次使用类的时候分配内存。
+		static修饰的代码块称为静态代码块，在第一调用类时候（可能是类方法、类变量）或者是new其对象，都会触发仅有的一次。
+		static修饰的内部类称为静态内部类，静态内部类属于整个外部类，而不属于外部类的每个对象。不能访问外部类的非静态成员。
+	10 final和abstract关键字的作用
+		final 可以用来修饰 类 方法 属性
+			被final修饰的类不能被继承
+			被final修饰的方法不能被重写但是能够被重载
+			被final修饰的属性不能被改变，如果是基本数据类型，值不能改变，引用数据类型，栈内存中的引用不能指向其它的引用。必须有初始值
+		abstract 可以用来修饰类 和 方法
+			被abstract修饰的类叫做抽象类，不能被实例化，只能被继承，
+			被abstract修饰的方法叫做抽象方法，不能有具体的实现，只能被子类重写。由抽象方法的类，一定是抽象类。
+	11 final、finally、finalize的区别
+		final finally finalize首先他们三个是没有任何联系的。
+		final 用来修饰类 方法 属性
+			被final修饰的类不能被继承
+			被final修饰的方法不能被重写，但是可以重载
+			被final修饰的属性不能被改变，必须有初始值。基本数据类型的值一旦赋值完毕就不能再次改变，final修饰的引用数据类型，栈内存中的引用不能指向其它的引用。必须有初始值。
+		finally 用于在异常处理的时候，不管是否发生异常，try catch代码块里面的代码执行完毕后，都会执行finally里面的代码，通常常用于关闭io等操作。
+		finalize 用于在java的内存回收机制在回收内存的时候调用。不建议我们自行覆盖重写。
+	12 写出java.lang.Object类的六个常用方法
+		toString
+		clone
+		finalize
+		euqals
+		notify
+		notifyAll
+		wait
+		getClass
+	13 写出你常见的五个异常,并解释
+		NullPointException 空指针异常
+		ArrayIndexOutOfBoundsException 数组下标越界异常
+		IOException IO异常
+		ClassNotFoundException 类不存在没有找到
+		ArithmeticException 算数运算异常
+		ClassCastException 类型转换异常
+		FileNotFoundException 文件未找到异常
+		NumberFormatException 字符串转换为数字异常
+		SQLException 操作数据库异常
+	14 写出四种权限修饰符的区别
+		private 只有当前类可以访问
+		default 默认访问修饰符，可以在当前类和当前包下的其他类访问
+		protected 可以被当前类，当前包下和继承了这个类的访问
+		public 所有环境下都可以访问
+	15 继承条件下构造方法的执行过程是这样的?
+		首先执行父类的构造方法，然后再执行子类的构造方法
+	16 ==和equals的区别和联系
+		在默认的情况下也就是说的Object对象里边的equals左判断比较的实现就是用 == ，判断地址
+	17 实现多态的三个条件是什么?
+		继承
+		子类重写父类的方法
+		父类引用指向子类对象
+	18 接口和抽象类的异同之处是什么?
+		相同点：
+			接口和抽象类都包含了抽象方法，类必须实现所有的抽象方法，否则也是抽象类
+			抽象类和接口都不能独自实例化，必须由其它类继承或实现。
+		异同点：
+			接口只能定义公开的静态的常量，而抽象类可以跟普通类一样定义，没有约束
+			接口不能由构造方法而抽象类可以由构造方法
+			接口只能由公开的静态的抽象方法（1.8后可以定义默认的方法），而抽象类不仅可以由抽象方法也可以有普通方法
+			接口可以继承多个接口，而抽象类只能继承一个类或实现多个接口
+		他们两个最大的主要差别还是设计理念上。
+			抽象类体现了一种继承的关系，目的是代码复用。
+			接口而是规定了一种能力的体现，约束能做什么。
+	19 简述Java的垃圾回收机制
+		java垃圾回收机制简称GC，顾名思义就是可以帮助我们回收“垃圾”，
+		而这个垃圾在程序中指的就是无用的对象，当程序员开始创建变量的时候，
+		GC就开始监控这个对象的地址、大小等信息，通过特定的算法来感知并回收无用的内存。
+		程序员可以手动的通过System.gc();或者Runtime.getRuntime().gc();进行回收，但是按照java的规范，垃圾回收器并不一定执行。
+	20 Checked异常和Runtime异常的区别
+		Checked是我们写代码时候发现后必须手动捕捉处理的异常
+		Runtime运行时异常多数是由于我们代码写的不规范造成的，不可预知性。
+	21 Java异常处理try-catch-finally的执行过程
+		首先执行try，在没有发生异常的情况下去执行finally，
+		如果发生了异常并捕捉到了就会中断try代码块的代码而去执行catch代码块里面的代码，然后去执行finally里面的代码。
+	22 异常处理中throws和throw的区别
+		throws 
+			用于声明该方法内抛出了异常
+			必须用于参数列表的后面，不能单独使用
+			后面可以跟多个异常类
+		throw
+			用于自行抛出异常
+			用于方法内，可以作为单独的语句
+			throw只能抛出一个异常对象
+	23 为什么要有基本数据类型的包装类?什么是自动装箱和自动拆箱
+		首先java是面向对象语言，那么我们的集合类等都是不能存放基本数据类型的，只能存放对象。
+		其次单一的基本数据类型功能单一，而包装类在其特性的基础上加上了许多的实用方法。
+		
+		自动装箱和自动拆箱就是从基本数据类型转换为其对应的包装类和包装类转换其基本数据类型。
+		自动装箱valueOf 拆箱 比如 Integer.intValue();
+	24 为什么是String是不可变字符串?
+		首先String是被final修饰的，其次我们知道String里面的两个成员变量最重要的value也是被final修饰的，而且value没有提供setValue()的方法，所以外部无法修改这个对象。
+		好处：
+			只有当字符串是不可变的，字符串常量池才可以实现，才可以节省很多heap空间，因为不可变，我们其它的String对象也可以引用这个地址，如果要是改变了这个值，那么其它的String的值也将发生改变。
+			如果字符串是可变的将引起安全的问题，因为我们用户名密码等敏感信息都是通过字符串的形式传入的，如果要是可变的，黑客就可能会钻这个孔子了。
+			因为字符串不可变，所以是多线程安全的，同一个字符串可以被多个线程共享，这样不会因为下称安全问题而使用同步。
+			因为字符串不可变，所在在创建这个String对象的时候hashCode就被缓存了，不需要重新计算，这就使得Map中的建，字符串处理的速度快过于其它的对象。这就是HaspMap中的键往往都是用字符串的主要原因。
+	25 String、StringBuffer、StringBuilder区别与联系
+		相同点：
+			都可以用来存储和操作字符串，同时三者都是被final修饰的，不可以被继承操作
+		不同点：
+			String是只读字符串，意味着引用字符串内容是不可以被修改的。
+			StringBuilder/StringBuffer的内容是可以改变的，而且不会改变原来指向的地址。
+			StringBuilder是线程不安全的所以效率更高一些 StringBuffer是线程安全的，效率上相对较低一些。
+	26 String s="Hello";s=s+"world!";执行后，s内容是否改变？为什么?
+		不会改变，因为String被设计成不可变的字符串，最开始s=“Hello”，但是被 加完后产生了一个新的字符串“Hello World"，
+		这是原来的字符串并没有改变只是s的指向发生了改变，字符串常量池此时由"Hello" 和 "Hello Wolrd"两个字符串
+	27 String s = new String("xyz");创建几个String Object? 为什么?
+		一个或两个
+		"xyz"对象是要存放在字符串常量缓冲区中的，如果原先不存在的话则添加进去，如果存在的话就直接引用。
+		其次new String也会产生一个对象
+	28 下面这条语句一共创建了多少个对象：String s="a"+"b"+"c"+"d";
+		会被编译器自动优化成一条语句进行开辟字符串常量池，也就是产生了一个对象
+	29 编码题:使用递归算法输出某个目录下所有文件和子目录列表
+		public static void target(File file){
+			if(!file.exists()){
+				return;
+			}
+			File files = file.listFiles();
+			if(files == null){
+				return;
+			}
+			for(File f : files){
+				if(f.isFile()){
+					System.out.println("File:" + f.getName());
+				}else{
+					System.out.println("Directory:" + file.getName());
+					target(f);
+				}
+			}
+		}
+	30 写出Java集合体系结构（List、Set、Collection、Map的区别和联系）
+		Collection 存储一组不唯一无序的对象 并且是List 和 Set的父类
+		List 存一组不唯一 有序的对象
+		Set 存储一组唯一 无序的对象
+		Map 接口存储一组键值对的key value形式的映射，key无序唯一。
+	31 Vector和ArrayList的区别和联系
+		相同点：
+			底层都是使用的数组结构
+			大多数方法功能相似
+			都是长度可变的数组结构
+		不同点：
+			Vector是早前Java1.0版本提供的类，ArrayList是用来替代Vector的
+			Vector是线程安全的，ArrayList是非线程安全的
+			Vector的默认扩容倍数是原来的1倍，ArrayList是0.5倍。
+	32 ArrayList和LinkedList的区别和联系
+		相同点：
+			都实现了List接口，都有不唯一 有序的特点
+		不同点：
+			ArrayList 底层使用数组作为数据结构，在内存中分配连续的内存空间，在随机访问和遍历的时候速度非常快
+			LinkedList 底层使用链表作为数据结构，在插入或删除的时候速度很快。
+	33 HashMap和Hashtable的区别和联系
+		相同点：
+			都实现了Map接口，底层都是哈希表，查询速度快
+		不同点:
+			HashMap是线程不安全的 Hashtable是线程安全的
+			Hashtable是早期java1.0提供的版本 HashMap是java1.2提供的
+			Hashtable继承了Dictionary HashMap继承了AbstractMap类
+			Hashtable不允许null 值，HashMap允许null值
+	34 HashSet的使用和原理（hashCode()和equals()）
+		HashSet底层就是HashMap
+		在向Set中添加元素的时候，首先会计算这个对象的hashCode，根据得到的hashCode来确定存放的位置，如果hashCode的位置，
+		已经存在了一个元素则会用equals进行比较，如果返回true则认为已经存在该对象，不继续添加。如果返回false则会产生一个
+		链表来链接这两个元素。
+	35 TreeSet的原理和使用（Comparable和comparator）
+		TreeSet集合元素不允许重复，且自然有序
+		TreeSet采用树形结构存储数据，存入元素的时候需要和树形结构中的数据进行比对，需要指定比较策略
+		被存入的元素可以实现Comparable外部比较器，指定比较策略，或者在TreeSet的构造方法中传入Comparator内部比较器进行指定。
+	36 集合和数组的比较（为什么引入集合）
+		数组不是面向对象的，java是面向对象语言，不是对象就肯定缺少了方法，集合凭借着自己方法功能全面更有用。
+		数组的效率要高于集合。
+		数组的长度是固定的，无法进行扩展。
+		数组无法得知存入元素的真实个数，只能知道数组的长度。
+		集合的种类丰富，可以面对各种各样的问题时候供我们选择。
+	37 Collection和Collections的区别
+		Collection是Java提供的集合的接口，提供一组不唯一，无序的对象。
+		Collections是专门用于操作集合的工具类，提供了一系列的静态方法如：排序、搜索、线程安全等。
+	38 输入流和输出流联系和区别，节点流和处理流联系和区别
+		向程序中读入数据就是输入流，向程序外部写入数据就是输出流
+		节点流可以向一个特定的地方（节点）读写数据，叫做节点流
+		处理流就是对一个已经存在的流的连接的封装，通过所封装的流的功能调用实现读写数据。如 BufferedReader。处理流的构造方法总是要带一个其他的流对象做参数。一个流对象经过其他流的多次包装，称为流的链接
+	39 字符流字节流联系区别；什么时候使用字节流和字符流?
+		字符流和字节流是流的一种划分，按照流的数据单位进行划分。两类都分为输入和输出操作。在字节流中输出数据主要使用OutputStream 输入数据主要使用InputStream。字符流输出Writer 输入为Reader。这四个都是抽象类。
+		字符流处理的单元为2进制的Unicode字符，分别操作字符，字符数组，字符串，而字节流处理单元为1字节，操作字节和字节数组。
+	40 列举常用字节输入流和输出流并说明其特点，至少5对
+		FileInputStream 从文件系统中的某个文件获得输入字节 FileOutputStream 从程序中读取数据，写入到文件里面
+		ObjectInputStream 用于恢复以前序列化的对象，也可以正赛网路通信中进行远程传递对象进行序列化。ObjectOutputStream 用于对对象进行序列化到磁盘中
+		ByteArrayInputStream 字节数组流 包含一个内部缓冲区，该缓冲区包含从流中读取字节 ByteArrayOutputStream 此类实现了一个输出流，其中的数据写入一个byte数组，缓冲区的容量会随着数据的不断写入而不断增加，可以使用toByteArray()和toString()获取数据
+		BufferedInputStream 缓冲字节流，当读入数据的时候，数据按块读入缓冲区，其后的操作则直接访问缓冲区  BufferedOutputStream 当写入数据的时候首先写入缓冲区，当缓冲区满了的时候，其中的数据写入所连接的输出流。
+		BufferedReader 缓冲字符流 里面内置缓冲区，数据按快读入缓冲区，其后的操作则直接访问缓冲区  BufferedWriter 当写入数据的时候首先写入缓冲区，当缓冲区满了的时候，其中的数据写入所连接的输出流 flush用于向缓冲区中的所有数据一次性全部写入到输出流中
+		InputStremaReader InputStreamWriter 用于将字节流转换成字符流 
+		DataInputStream DataOutputStream 处理流 提供了所有可以存取java基本数据类型以及String的方法操作。
+	41 说明缓冲流的优点和原理
+		传统的不带缓冲流的工作原理：
+			读取一个字节或字符就直接写入磁盘，造成磁盘IO的大量开销和浪费
+		带缓冲流的工作原理：
+			读取一个字节或字符首先不写入磁盘，它的中间有一个缓冲的地方，先把内容写入到缓冲区，等缓冲区满了再一次性写入，也可以用flush进行强制写入缓冲区的内容。可以有效降低磁盘的开销
+	42 序列化的定义、实现和注意事项
+		想把一个对象写入到磁盘或者网络上， 把他序列化冲一个字节流。
+		实现步骤和注意：
+			首先要实现Serializable接口
+			如果序列化的对象中的某个属性是对象，那么这个对象也必须实现Serializable接口，否则会抛出NotSerializableeException
+			序列化对静态变量是无效的
+			如果某个属性不想序列化只需要在该属性的访问修饰符后面加上transient关键字
+			串行化只能保存变量的值，任何的访问修饰符都不能保存
+			要注意序列化版本号的问题，解决方案为java对象只能serialVersionUID
+	43 编码题:使用IO流完成文件夹复制（结合递归）
+		public class Daily{
+			public static void main(String[] args){
+				copyDir("c:/a","b:/a");
+			}
+			
+			public static void copyFile(File sourceFile,File targetFile) throws Exception{
+				BufferedInputStream bis = new BufferedInputStream(new InputStreamReader(sourceFile));
+				BufferedOutputStream bos = new BufferedOutputStream(new OutputStreamWriter(targetFile));
+				byte[] buf = new byte[1024*5];
+				int len = 0;
+				while((len = bis.read(buf)) != -1){
+					bos.write(buf);
+				}
+				bos.flush();
+				if(bis != null)
+					bis.close();
+				if(bos != null)
+					bos.close();
+			}
+			
+			public static void copyDir(String sourceDir,String targetDir) throws Exception{
+				File fSourceDir = new File(sourceDir);
+				if(!fSourceDir.exists() || !fSourceDir.isDirectory())
+					return;
+				File fTargetDir = new File(targetDir);
+				if(!fTargetDir.exists())
+					fTargetDir.m 	kdirs();
+				File[] files = fSourceDir.listFiles();
+				if(files == null)
+					return;
+				for(File file : files){
+					if(file.isFile()){
+						File targetFile = new File(fTargetDir,file.getName());
+						copyFile(file,targetFile);
+					}
+					if(file.isDirectory()){
+						String subSourceDir = sourceDir + File.separator + file.getName();
+						String subTargetDir = targetDir + File.separator + file.getName();
+						copyDir(subSourceDir,subTargetDir);
+					}
+				}
+				
+			}
+		
+		}
+	44 进程和线程有什么联系和区别？
+		进程是具有一定独立功能的程序 是系统进行分配和调度的基本单位
+		线程是进程的一个实体 是cpu调度和执行的基本单位，它比进程更小，能独立运行基本单位，同属于一个进程的其它线程共享进程的所拥有的全部资源。
+	45 创建线程的两种方式分别是什么,优缺点是什么？
+		继承Thread 编写简单，但是一个类只能继承一个类
+		实现Runnable 可以继承其它类，多个线程可以共享一个Thread对象，编程方式稍复杂，如访问当前线程需要Thread.currentThread();
+	46 Java创建线程后，调用start()方法和run()的区别
+		start 是真正启动线程的方法
+		run 则是直接调用线程里面的run方法，没有线程可言。
+	47 线程的生命周期是?
+		新建 新建了一个Thread实例，但是此时还没有调用start方法启动
+		就绪 已经调用了start方法，正在等待cpu分给它时间片，也就是说此时线程正在排队，等在获取cpu资源x
+		运行 此时线程已经获得了cpu分给它的资源，正在运行，如果没有自己放弃资源或更高优先级的线程来运行它将一直运行完run方法里面的内容
+		死亡 当线程执行完毕或这被其它线程杀死，线程就进入了死亡状态，这个时候不可能在进入就绪状态了。 
+			自然终止：调用完run()方法
+			异常终止：调用stop()方法让一个线程终止运行
+		阻塞 由于某种原因导致正在运行的线程放弃资源并暂停自己的运行，及进入堵塞状态。
+			正在睡眠：调用sleep()方法让线程睡眠指定时间
+			正在等待：调用wait()方法 (调用notify或notifyAll方法恢复）。
+			被另一个线程阻塞：调用suspend()方法。（调用resume()方法恢复)
+	48 如何实现线程同步？
+		使用同步代码块synchronized，或者使用synchronized修饰方法，变成同步方法
+	49 什么是同步锁,什么是死锁?
+		同步锁 顾名思义就是在同步的时候进行加锁，在多个线程共同运行的时候，共同操作一段代码，如果没有加锁，就会可能造成意想不到的后果了。加上所可以保证线程的安全，虽然效率会降低
+		死锁 当同步锁中出现了多个线程同步执行，并且一个线程里面又嵌套了另一个线程，可能就会导致程序无限的等待，这种情况我们称之为死锁
+	50 简述sleep( )和wait( )有什么区别？
+		sleep是Thread中的方法；作用是导致线程暂停执行指定的时间，给机会执行让给其它线程，到时候会自动恢复，不会释放对象锁。
+		wait是Object类中的方法，对此对象调用wait方法会释放对象锁，进入等待此对象的等待锁定池，只有针对此对象发出notify或notifyAll方法后，才会进入等待锁定池准备获取对象锁进入运行状态。
+	51 Java中实现线程通信的三个方法的作用是什么？
+		wait 表示线程一直等待直到其它线程通知
+		notify 唤醒一个处于等待状态的线程，需要注意的是，并不能指定唤醒某一个线程，而是又JVM决定，与优先级无关
+		notifyAll 唤醒一个对象上所有调用wait的线程，并不是给每一个唤醒线程一个对象锁，而是让他们竞争。
+	52 Java反射技术主要实现类有哪些，作用分别是什么？
+		Class 代表一个类
+		Field 代表一个类的属性
+		Method 代表成员方法
+		Constructor 代表一个构造方法
+		Array 提供了一个动态创建数组和访问数组的静态方法
+	53 反射的使用场合和作用、及其优缺点
+		使用场合：
+			在编译时根本无法知道对象或类属于哪些类，程序只能依靠运行时信息来发现该对象和类的真实信息。
+		主要作用：
+			通过反射可以使程序代码访问到装载在JVM中类的信息，获取装载的属性、方法、构造方法信息等。
+		反射优点：
+			使得程序变得灵活性可扩展性解耦合，它允许程序控制和操作任何类的对象，无需提前编码
+		反射缺点：
+			反射是一种解释性操作，这会使得在操作程序的时候比直接编码的速度慢上很多。只有在要求灵活性扩展性很高的框架才会使用。由于反射直接跳过了代码技术，这样使得维护起来也更加困难，难以理解
+	54 什么是设计模式，设计模式的作用。
+		设计模式是一套反复使用的、多数人、经过反复编写出来的优秀的设计经验的总结，
+		特定环境下特定问题的处理方法。
+		好处：
+			重用设计和代码 重用设计比重用代码更有意义，自动带来代码的重用
+			提高扩展性 大量使用面向接口编程，预留扩展插槽，新的功能或特性很容易增加到系统中来
+			提高灵活性 通过组合提高灵活性，可允许代码修改平稳发生，对一处修改不会波及到其它的模块。
+			提高开发效率 正确使用设计模式，可以节省大量的时间
+	55 举例你常见的设计模式,并介绍他们的优缺点和使用场景
+		单例模式：
+			保证一个类只有一个实例，并且提供了一个访问该实例的全局访问点
+			由于单例模式只产生一个实例，减少了系统性能的开销，当一个对象产生需要比较多的资源的时候，如读取配置、产生其他依赖对象时候，则可以通过在应用启动时后直接产生一个单例，然后驻留在内存中。
+	56 写出简单工厂模式的示例代码
+		public interface Car {
+			public void run();
+		}
+		public class CarFactory {
+			public static Car createCar(String car) {
+				Car c = null;
+				if("BWM".equals(car)) {
+					c = new BWM();
+				}
+				return c;
+			}
+		}
+		public class BWM implements Car{
+			@Override
+			public void run() {
+				System.out.println("BWM Created!");
+			}
+		}
+		
+		public class Test {
+			public static void main(String[] args) {
+				Car c = CarFactory.createCar("BWM");
+				c.run();
+			}
+		}
+	57 写出懒汉式单例模式代码
+		public class SingleStaticClassInnerMode {
+			private class static SingleInnerClassInstance {
+				private static final SingleStaticClassInnerMode instance = new SingleStaticClassInnerMode();
+			}
+			
+			private SingleStaticClassInnerMode() {}
+			
+			public static SingleStaticClassInnerMode getInstance() {
+				return SingleInnerClassInstance.instance;
+			}
+		}
+	58 什么是枚举?枚举的好处?
+		enum类是一个很特殊的一个类，实际上他是一个抽象类。枚举中可以用抽象方法，但是枚举中的每一个对象都分别实现抽象方法。	
+	59 什么是泛型?泛型的好处?
+		泛型是给javac编译器使用的，确保数据的安全性和免除强制类型转换的麻烦，但是一旦编译完成，所有与泛型有有关的类型将全部被擦除，也就是说泛型就是在编译期间有效。
+	60 xml是什么?简述解析xml的几种方式
+		xml是一种扩展的标记语言，以村文本格式存储，实现不同平台之间的数据通信。
+		DOM
+		SAX
+		JDOJ
+		DOM4J
+	61 说一说你理解的GC
+		GC使得我们程序员可以更有充分的时间去思考设计程序，而不用大为担心垃圾回收，因为GC可以帮我们完成。
+		对于GC来说，当程序员创建一个对象时候，GC就开始监控这个对象的地址、大小以及使用情况。通常，GC采用有向图的方式记录和管理堆中的所有对象。
+		通过这种方式确定哪些对象是可达的，有效的，哪些对象是不可达的，无效的。当GC确定一些对象可达时，GC就有责任回收这些内存空间。
+		也可以手动通过System.gc();胡总和Runtime.getRuntime().gc();进行调用，但不保证会执行。
+	62 常见的数据库类型有哪些?常见的关系型数据库有哪些,它们之间的优缺点是什么?
+		关系型数据库 非关系型数据库
+		常见的关系型数据库 Oracle Mysql SqlServer
+		Mysql免费 Oracle收费
+	63 如果一个查询语句被定义为慢sql,该从哪些方向去排查问题?
+		可以考虑使用最简便的explain关键字排查法，看看sql语句的执行计划，是否走了索引等快速扫描还是走了全表all等进行分析。
+	64 count(id) 好还是count(*)好?为什么?
+		count(id)
+			InnoDB引擎会遍历整张表，把每一行行的id值全部取出来，返回给server层，server层拿到id后，判断是不可能为空的，就按行累加。
+		count(1)
+			InnoDB引擎遍历整张表，但不取值，server层对于返回的每一行，放一个数字 1 进去，判断是不可能为空的，累计增加。
+		count(字段)
+			1.如果这个字段是定义为not null的话，一行行地从记录里面读出这个字段，判断不能为null，按行累加
+			2.如果这个字段定义允许为null的话，判断到有可能是null，还要把值取出来在判断一下，不是null才累加。
+		count(*)
+			不会把全部的字段取出来，而是做专门的优化，不取值，count(*)肯定不是null，按行累加。
+		count(*)>count(1)>count(id)>count(字段)
+	65 左连接和右连接的区别是什么?
+		左连接 以左表为参照显示所有数据，如果右表没有则以null显示
+		右练级 以右表为参照显示所有数据，如果左表没有则以null显示
+	66 为什么需要子查询?
+		子查询就是在原有的查询语句中嵌入新的查询 简化了sql的编写。
+	67 已知有如下表,请完成如下sql需求
+			一、使用一条sql语句，查询每门课都大于80分的学生姓名。
+			id name course    score
+			1  张三    语文     81
+			2  张三    数学     75
+			3  李四    语文     86
+			4  李四    数学     90
+			5  王五    语文     81
+			6  王五    数学     100
+			7  王五    英语     90
+
+			create table tb_student(
+				   id number(4) ,
+				   name varchar2(20),
+				   course varchar2(20),
+				   score number(5,2)
+			);
+			insert into tb_student values(1,'张三','语文',81);
+			insert into tb_student values(2,'张三','数学',75);
+			insert into tb_student values(3,'李四','语文',86);
+			insert into tb_student values(4,'李四','数学',90);
+			insert into tb_student values(5,'王五','语文',81);
+			insert into tb_student values(6,'王五','数学',100);
+			insert into tb_student values(7,'王五','英语',90);
+			commit;
+		
+		答：
+			select name from (
+				select name from tb_student group by name having min(score) > 80;
+			) stu
+		
+			=====================================
+			二、将以上的数据转成以下格式(行转列)  (case when)
+			姓名  语文  数学  英语  总分
+			李四   80   ...   .....  ... 
+			王五  
+			张三 
+
+		答:
+			select name
+				max(case course when '语文' then score else 0 end) '语文',
+				max(case course when '数学' then score else 0 end) '数学',
+				max(case course when '英语' then score else 0 end) '英语',
+				sum(score) '总分'
+			from tb_student
+			group by name
+		
+			=====================================
+
+			三、有一个表t_test有两个字段c1 c2，字都非空，
+			写一个SQL语句列出该表中一个c1对应多个不同
+			的c2的纪录。
+			101 a1001
+			101 a1001
+			102 a1002
+			102 a1003
+			103 a1004
+			104 a1005
+			104 a1006
+			105 a1007
+			105 a1007
+			105 a1007
+			结果
+			102 a1002
+			102 a1003
+			104 a1005
+			104 a1006 
+
+			create table t_test(
+			   c1 number(3),
+			   c2 varchar2(20)
+			);
+			insert into t_test values('101','a1001');
+			insert into t_test values('102','a1002');
+			insert into t_test values('102','a1003');
+			insert into t_test values('103','a1004');
+			insert into t_test values('104','a1005');
+			insert into t_test values('104','a1006');
+			insert into t_test values('105','a1007');
+			insert into t_test values('105','a1007');
+			insert into t_test values('105','a1007');
+			commit;
+		
+		答:
+			select t2.* from t_test t1,t_test t2 where t1.c1 = t2.c1 and t1.c2 <> t2.c2;
+
+			=================================================
+			四、创建以下表，完成SQL编写
+			CREATE TABLE COURSE
+				(
+				CNO   VARCHAR2 (5) NOT NULL,
+				CNAME VARCHAR2 (10) NOT NULL,
+				TNO   VARCHAR2 (10) NOT NULL,
+				CONSTRAINT PK_COURSE PRIMARY KEY (CNO)
+				);
+
+			COMMENT ON COLUMN COURSE.CNO IS '学科编号';
+			COMMENT ON COLUMN COURSE.CNAME IS '学科名称';
+			COMMENT ON COLUMN COURSE.TNO IS '教师编号';
+
+			CREATE TABLE GRADE
+				(
+				LOW  NUMBER (3) NOT NULL,
+				UPP  NUMBER (3) NOT NULL,
+				RANK CHAR (1) NOT NULL,
+				CONSTRAINT PK_GRADE PRIMARY KEY (LOW, UPP)
+				);
+
+			COMMENT ON COLUMN GRADE.LOW IS '分数范围下限';
+			COMMENT ON COLUMN GRADE.UPP IS '分数范围上限';
+			COMMENT ON COLUMN GRADE.RANK IS '评级';
+
+			CREATE TABLE SCORE
+				(
+				SNO    VARCHAR2 (3) NOT NULL,
+				CNO    VARCHAR2 (5) NOT NULL,
+				DEGREE NUMBER (10,1) NOT NULL,
+				CONSTRAINT PK_SCORE PRIMARY KEY (SNO, CNO)
+				);
+
+			COMMENT ON COLUMN SCORE.SNO IS '学生编号';
+			COMMENT ON COLUMN SCORE.CNO IS '学科编号';
+			COMMENT ON COLUMN SCORE.DEGREE IS '成绩';
+
+			CREATE TABLE STUDENT
+				(
+				SNO       VARCHAR2 (3) NOT NULL,
+				SNAME     VARCHAR2 (4) NOT NULL,
+				SSEX      VARCHAR2 (2) NOT NULL,
+				SBIRTHDAY DATE NOT NULL,
+				CLASS     VARCHAR2 (5) NOT NULL
+				);
+
+			COMMENT ON COLUMN STUDENT.SNO IS '学生编号';
+			COMMENT ON COLUMN STUDENT.SNAME IS '学生姓名';
+			COMMENT ON COLUMN STUDENT.SSEX IS '学生性别';
+			COMMENT ON COLUMN STUDENT.SBIRTHDAY IS '生日';
+			COMMENT ON COLUMN STUDENT.CLASS IS '班级';
+
+			CREATE TABLE TEACHER
+				(
+				TNO       VARCHAR2 (3) NOT NULL,
+				TNAME     VARCHAR2 (4) NOT NULL,
+				TSEX      VARCHAR2 (2) NOT NULL,
+				TBIRTHDAY DATE NOT NULL,
+				PROF      VARCHAR2 (6) NOT NULL,
+				DEPART    VARCHAR2 (10) NOT NULL,
+				CONSTRAINT PK_TEACHER PRIMARY KEY (TNO)
+				);
+
+			COMMENT ON COLUMN TEACHER.TNO IS '教师编号';
+			COMMENT ON COLUMN TEACHER.TNAME IS '教师姓名';
+			COMMENT ON COLUMN TEACHER.TSEX IS '性别';
+			COMMENT ON COLUMN TEACHER.TBIRTHDAY IS '生日';
+			COMMENT ON COLUMN TEACHER.PROF IS '职称';
+			COMMENT ON COLUMN TEACHER.DEPART IS '部门';
+
+			INSERT INTO COURSE (CNO, CNAME, TNO)
+			VALUES ('3-105', '计算机导论', '825');
+			INSERT INTO COURSE (CNO, CNAME, TNO)
+			VALUES ('3-245', '操作系统', '804');
+			INSERT INTO COURSE (CNO, CNAME, TNO)
+			VALUES ('6-166', '数据电路', '856');
+			INSERT INTO COURSE (CNO, CNAME, TNO)
+			VALUES ('9-888', '高等数学', '100');
+
+
+			INSERT INTO GRADE (LOW, UPP, RANK)
+			VALUES (90, 100, 'A');
+			INSERT INTO GRADE (LOW, UPP, RANK)
+			VALUES (80, 89, 'B');
+			INSERT INTO GRADE (LOW, UPP, RANK)
+			VALUES (70, 79, 'C');
+			INSERT INTO GRADE (LOW, UPP, RANK)
+			VALUES (60, 69, 'D');
+			INSERT INTO GRADE (LOW, UPP, RANK)
+			VALUES (0, 59, 'E');
+
+			INSERT INTO SCORE (SNO, CNO, DEGREE)
+			VALUES ('103', '3-245', 86);
+			INSERT INTO SCORE (SNO, CNO, DEGREE)
+			VALUES ('105', '3-245', 75);
+			INSERT INTO SCORE (SNO, CNO, DEGREE)
+			VALUES ('109', '3-245', 68);
+			INSERT INTO SCORE (SNO, CNO, DEGREE)
+			VALUES ('103', '3-105', 92);
+			INSERT INTO SCORE (SNO, CNO, DEGREE)
+			VALUES ('105', '3-105', 88);
+			INSERT INTO SCORE (SNO, CNO, DEGREE)
+			VALUES ('109', '3-105', 76);
+			INSERT INTO SCORE (SNO, CNO, DEGREE)
+			VALUES ('101', '3-105', 64);
+			INSERT INTO SCORE (SNO, CNO, DEGREE)
+			VALUES ('107', '3-105', 91);
+			INSERT INTO SCORE (SNO, CNO, DEGREE)
+			VALUES ('108', '3-105', 78);
+			INSERT INTO SCORE (SNO, CNO, DEGREE)
+			VALUES ('101', '6-166', 85);
+			INSERT INTO SCORE (SNO, CNO, DEGREE)
+			VALUES ('107', '6-106', 79);
+			INSERT INTO SCORE (SNO, CNO, DEGREE)
+			VALUES ('108', '6-166', 81);
+
+
+			INSERT INTO STUDENT (SNO, SNAME, SSEX, SBIRTHDAY, CLASS)
+			VALUES ('108', '曾华', '男', TO_DATE ('1977-09-01', 'YYYY-MM-DD'), '95033');
+			INSERT INTO STUDENT (SNO, SNAME, SSEX, SBIRTHDAY, CLASS)
+			VALUES ('105', '匡明', '男', TO_DATE ('1975-10-02', 'YYYY-MM-DD'), '95031');
+			INSERT INTO STUDENT (SNO, SNAME, SSEX, SBIRTHDAY, CLASS)
+			VALUES ('107', '王丽', '女', TO_DATE ('1976-01-23', 'YYYY-MM-DD'), '95033');
+			INSERT INTO STUDENT (SNO, SNAME, SSEX, SBIRTHDAY, CLASS)
+			VALUES ('101', '李军', '男', TO_DATE ('1976-02-20', 'YYYY-MM-DD'), '95033');
+			INSERT INTO STUDENT (SNO, SNAME, SSEX, SBIRTHDAY, CLASS)
+			VALUES ('109', '王芳', '女', TO_DATE ('1975-02-10', 'YYYY-MM-DD'), '95031');
+			INSERT INTO STUDENT (SNO, SNAME, SSEX, SBIRTHDAY, CLASS)
+			VALUES ('103', '陆君', '男', TO_DATE ('1974-06-03', 'YYYY-MM-DD'), '95031');
+
+			INSERT INTO TEACHER (TNO, TNAME, TSEX, TBIRTHDAY, PROF, DEPART)
+			VALUES ('804', '李诚', '男', TO_DATE ('1958-12-02', 'YYYY-MM-DD'), '副教授', '计算机系');
+			INSERT INTO TEACHER (TNO, TNAME, TSEX, TBIRTHDAY, PROF, DEPART)
+			VALUES ('856', '张旭', '男', TO_DATE ('1969-03-12', 'YYYY-MM-DD'), '讲师', '电子工程系');
+			INSERT INTO TEACHER (TNO, TNAME, TSEX, TBIRTHDAY, PROF, DEPART)
+			VALUES ('825', '王萍', '女', TO_DATE ('1972-05-05', 'YYYY-MM-DD'), '助教', '计算机系');
+			INSERT INTO TEACHER (TNO, TNAME, TSEX, TBIRTHDAY, PROF, DEPART)
+			VALUES ('831', '刘冰', '女', TO_DATE ('1977-08-14', 'YYYY-MM-DD'
+
+
+			===============================================
+
+
+
+
+
+
+			1、查询Student表中的所有记录的Sname、Ssex和Class列。
+				select sname,ssex,class from student;
+			2、查询教师所有的单位即不重复的Depart列。
+				select depart from teacher group by depart;
+			3、查询Student表的所有记录。
+				select * from student;
+			4、查询Score表中成绩在60到80之间的所有记录。查询Score表中成绩在60到80之间的所有记录。
+				select * from score where degree between 60 and 80
+			5、查询Score表中成绩为85，86或88的记录。
+				select * from score where degree in (85,86,88)
+			6、查询Student表中“95031”班或性别为“女”的同学记录。
+				select * from student where class = 95031 or ssex = '女'
+			7、以Class降序查询Student表的所有记录。
+				select class from student order by class desc;
+			8、以Cno升序、Degree降序查询Score表的所有记录。
+				select * from score order by cno asc,degree desc
+			9、查询“95031”班的学生人数。
+				select count(*) from student where class = 95031
+			10、查询Score表中的最高分的学生学号和课程号。
+				select sno,cno from (select score.*,max(degree) from score) s;
+			11、查询‘3-105’号课程的平均分。
+				select avg(degree) from score where cno = '3-105'
+			12、查询Score表中至少有5名学生选修的并以3开头的课程的平均分数。
+				select avg(degree) from score where cno like '3%' group by cno having count(sno) >= 5
+			13、查询最低分大于70，最高分小于90的Sno列。
+				select max(degree) as m,min(degree) as i from score group by sno having m<90 and i>70
+			14、查询所有学生的Sname、Cno和Degree列。
+				select stu.sname,sco.cno,sco.degree from student stu left join score sco on stu.sno = sco.sno
+			15、查询所有学生的Sno、Cname和Degree列。
+				select s.sno,c.cname,s.degree from score s left join course c on s.cno = c.cno;
+			16、查询所有学生的Sname、Cname和Degree列。
+				select stu.sname,c.cname,s.degree from student stu right join score s on stu.sno = s.sno left join course c on c.cno = s.cno
+			17、查询“95033”班所选课程的平均分
+				select avg(degree) from score s inner join student stu on s.sno = stu.sno and stu.class = 95033
+			18、现查询所有同学的Sno、Cno和rank列。
+				select stu.sno,s.cno,g.rank from score s,grade g,student stu where stu.sno = s.sno and s.degree between g.low and g.upp
+			19、查询选修“3-105”课程的成绩高于“109”号同学成绩的所有同学的记录。
+				select * from score where cno = '3-105' and degree > (select degree from score where sno = 109 and cno = '3-105')
+			20、查询score中选学一门以上课程的同学中分数为非最高分成绩的记录。
+				select s1.sno,s1.degree from score s1,
+					(select s.sno,max(s.degree) degree from score s goupy by s.sno having count(s.sno) > 1) s2
+				where s1.sno = s2.sno and s1.degree < s2.degree
+			21、查询成绩高于学号为“109”、课程号为“3-105”的成绩的所有记录。
+				select * from score where degree > (select degree from score s1 where s1.sno = 109 and s1.cno = '3-105')
+			22、查询和学号为108的同学同年出生的所有学生的Sno、Sname和Sbirthday列。
+				select * from student s2,(select sno,sbirthday from student where sno = 108) s1 where s2.sbirthday = s1.sbirthday  and s1.sno <> s2.sno
+			23、查询“张旭“教师任课的学生成绩。
+				select * from score where cno = (select c.cno from teacher t left join course c on t.tno = c.tno where t.tname = '张旭')
+			24、查询选修某课程的同学人数多于5人的教师姓名。
+				select * from teacher where tno = (
+					select c.tno from score s right join course c on s.cno = c.cno group by s.cno having count(s.sno) > 5
+				)
+			25、查询95033班和95031班全体学生的记录
+				select * from student where class in (95033,95031)
+			26、查询存在有85分以上成绩的课程Cno.
+				select * from score where degree > 85 group by cno
+			27、查询出“计算机系“教师所教课程的成绩表。
+				select * from score where cno in (select c.cno from teacher t left join course c on t.tno = c.tno where t.depart = '计算机系' and c.cno is not null)
+			28、查询“计算机系”与“电子工程系“不同职称的教师的Tname和Prof。
+				select * from teacher where depart = '计算机系' or depart = '电子工程系' and prof not in(select tno from teacher where depart = '计算机系' or depart = '电子工程系' )
+			29、查询选修编号为“3-105“课程且成绩至少高于选修编号为“3-245”的同学的Cno、Sno和Degree,并按Degree从高到低次序排序。
+				select * from score where cno = '3-105' and degree > (select max(degree) from score where cno = '3-245')
+			30、查询选修编号为“3-105”且成绩高于选修编号为“3-245”课程的同学的Cno、Sno和Degree.
+				select * from score where cno = '3-105' and degree > (select max(degree) from score where cno = '3-245')
+			31、查询所有教师和同学的name、sex和birthday.
+				select tname,tsex,tbirthday from teacher union select sname,ssex,sbirthday from student
+			32、查询所有“女”教师和“女”同学的name、sex和birthday.
+				select tname,tsex,tbirthday from teacher where tsex = '女' union select sname,ssex,sbirthday from student where ssex = '女'
+			33、成绩比该课程平均成绩低的同学的成绩表。
+				select s1.* from score s1,(select cno,avg(degree) avgD from score group by cno) s2 where s1.cno = s2.cno and s1.degree < s2.avgD
+			34、查询所有任课教师的Tname和Depart.
+				select c.tno,IFNULL(t.tname,'暂无信息'),IFNULL(t.depart,'暂无信息') from course c left join teacher t on c.tno = t.tno
+			35、查询所有未讲课的教师的Tname和Depart.?
+				select tname,depart from teacher where tno not in(select tno from course)
+			36、查询至少有2名男生的班号。
+				select class from student group by class having sum(ssex='男') > 1
+			37、查询Student表中不姓“王”的同学记录。
+				select * from student where sname not like '王%'
+			38、查询Student表中每个学生的姓名和年龄。
+				select sname,YEAR(NOW())-YEAR(sbirthday) from student
+			39、查询Student表中最大和最小的Sbirthday日期值。
+				select max(sbirthday),min(sbirthday) from student
+			40、以班号和年龄从大到小的顺序查询Student表中的全部记录。
+				select * from student order by sbirthday desc,class desc
+			41、查询“男”教师及其所上的课程。
+				select * from course where tno = (select tno from teacher where tsex = '男')
+			42、查询最高分同学的Sno、Cno和Degree列。
+				select * from score group by cno having degree = max(degree)
+			43、查询和“李军”同性别的所有同学的Sname.
+				select s1.* from student s1 inner join student s2 on s1.ssex = s2.ssex where s2.sname = '李军'
+			44、查询和“李军”同性别并同班的同学Sname.
+				select s1.* from student s1 inner join student s2 on s1.ssex = s2.ssex where s2.sname = '李军' and s1.class = s2.class
+			45、查询所有选修“计算机导论”课程的“男”同学的成绩表
+				select * from student where ssex = '男' and sno in (select s.sno from course c inner join score s on s.cno = c.cno where c.cname = '计算机导论')
+	68  数据库设计的三大范式是什么?
+		范式就是符合某一种设计要求的总结。要想设计一个结构合理的关系型数据库，必须满足一定的范式
+		第一范式：
+			最基本的范式。
+			数据库表每一列都是不可分割的基本数据项，同一列中不能有多个值。
+			简单说就是要却博爱每列标尺原子性
+			第一范式的合理遵循需要根据系统的实际要求来定。
+			比如：用户表（用户名、家庭地址）
+				  用户表（用户名、省、城市、详细地址）
+		第二范式
+			第二范式需要确保数据库表中的每一列都和主键相关，而不能只与主键的某一部分相关（主要针对联合主键而言）。
+			即再一个数据库表中只能保存一种数据，不可以把多种数据保存在同一张数据库表中。
+		第三范式
+			确保数据库表中的每一列数据都和主键直接相关，而不能间接相关。
+			属性不依赖于其它非属性。
+	69  关于数据库优化,你有什么想提的建议?
+		1.硬件
+		2.Mysql中可以使用show status 语句查询一些mysql数据库的性能参数。
+			比如“：show status like 'slow_queries'找出服务器慢查询的次数，然后根据日志，找出慢查询的语句，然后根据语句和表结构等进行优化。
+		3.通过explain分析查询语句，可以了解查询语句的执行瓶颈，找出查询语句的执行瓶颈，从而优化查询语句。
+		4.也可以通过describe关键字语法来分析，和explain的作用结果是一样的
+		5.mysql中提高速度最有效的方式就是对数据表设计和的索引。索引提供了高效访问数据的方法，并且加快了查询速度。因此，索引对查询速度的影响有着至关重要的作用。
+			使用索引可以可快速的定位表中的某一条数据，从而提高数据库的查询效率，如果查询的时候没有使用索引，查询语句将扫描表中的全部数据，从而造成全表扫描间接造成速度的缓慢，
+			在数据量大一些的情况下，这样查询速度会很慢，如果使用索引进行查询，查询语句根据索引快速定位到位置，从而减少查询记录数，提高效率。
+	70  什么是jdbc?面向接口编程的好处是什么?
+		JDBC(JAVA DataBase Connectvity) java数据库连接，java语言中用来规范客户端如何访问数据库的应用程序接口，提供了存储和查询数据库中数据的方法。
+		面向接口编程：
+			面向接口编程就是先把客户的业务逻辑关系提取出来，编写为一系列的端口，具体的业务逻辑实现通过接口的实现类来完成。当客户的需求发生边比划的时候，我们只需要编写该业务逻辑的新的实现类等即可完成。
+			不需要改写现有的代码，减少对系统的影响。降低程序的耦合度。最大限度的解耦。易于程序的扩展和维护。
+	71  mybatis对比jdbc的好处是什么?
+		1.拥有数据库连接池，减少数据库关闭启动对数据库和系统的资源浪费
+		2.SQL配置文件，减少硬编码
+		3.动态SQL语句，只专注些sql，各干各的事，专一
+		4.映射，将结果直接转换为java对象。
+	72  MyBatis与Hibernate有哪些不同？
+		hibernate的封装性更好，提供了更为完整的sql封装，也可以自动生成sql，减少编码。
+	73 #{}和${}的区别是什么？
+		1.#{} 对传入的参数会做预编译处理，会加上 ''符号，而${} 直接传值，不做任何处理
+		2.#{} 最大的好处就是可以很大程度上放置sql注入
+	74 当实体类中的属性名和表中的字段名不一样 ，怎么办 ？
+		1.在写sql语句的时候给每一个字段定义一个与属性名相同的别名
+		2.在Mapper映射文件中使用resultMap来定义映射规则
+	75  模糊查询like语句该怎么写?
+		select * from info where name like CONCAT('%',#{name},'%')
+	76 通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？
+		通过动态代理去调用，最后在通过解析器解析了mapper.xml的文件，然后具体执行
+		不能重载。
+	77 Mybatis是如何进行分页的？分页插件的原理是什么？
+		mybatis使用RowBounds对象进行分页，它是针对ResultSet结果集执行的内存分页，而非物理分页。可以在SQL内直接书写带有物理分页的参数来完成物理分页，也可以使用分页插件来完成物理分页
+		
+		分页插件的基本原理时使用Mybatis提供的插件接口，实现自定义插件，在插件的拦截方法内拦截待执行的sql，然后重写sql，根绝dialect方言，添加对应的物理分页语句和物理分页参数
+	78 Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？
+		1.通过resultMap 标签，逐一定义数据库列名和对象属性名之间的映射关系
+		2.使用sql列的别名功能，将列的别名书写为对象属性名
+		
+		有了列名和属性名的映射关系之后，Mybatis通过反射创建对象，同时使用反射给对象的属性逐一赋值并返回，哪些找不到映射关系的对象是无法进行赋值的。
+	79 如何获取自动生成的(主)键值?
+		再插入的时候可以加上如下参数：
+			useGeneratedKeys="true" keyProperty="主键对应的实体类属性名"
+		然后再service层里面就可以通过对象直接获取到了
+	80 Mybatis动态sql有什么用？执行原理？有哪些动态sql？
+		Mybatis动态sql可以在xml映射文件内，以标签的形式编写动态sql，执行原理是根据表达式的值，完成逻辑判断并动态拼接sql的功能。
+		常见的动态sql标签：
+			trim where set foreach if choose when other wise bind
+	81 Xml映射文件中，除了常见的select|insert|updae|delete标签之外，还有哪些标签？
+		resultMap parameterMap sql include selectKey trim
+		where foreach if choose when other bind 
+	82 Mybatis的Xml映射文件中，不同的Xml映射文件，id是否可以重复？
+		不同的xml映射文件如果配置了namespace，那么id可以重复；如果没有配置则不可以
+	83 说说mybatis中一对一,一对多是怎么实现的.
+		一对一
+			有联合查询的和嵌套查询，联合查询时几个表联合查询，只查询一次，通过resultMap里面配置association节点配置一对一的类就可以完成
+			嵌套查询是先查询一个表，根据这个表里面的结果的外键id，再去另一个表里面查询数据，也是通过association配置，但另一个表的查询是通过select属性配置。
+		一对多
+			有联合查询和嵌套查询。联合查询时几个表联合查询，只查询一次，通过resultMap里面collection节点配置一对多的类就可以i完成；
+			嵌套查询时先查一个表，根据这个表里面的结果的外键id，再去另一个表里面查询数据，也是通过配置colleciton，但是另外一个表的查询通过select节点配置。
+	84 什么是MyBatis的接口绑定？有哪些实现方式？
+		接口绑定，就是再Mybatis中任意定义接口，然后把接口里面的sql语句绑定，我们直接调用接口方法就可以，这样比原来的sqlsession提供的方法更加灵活
+		接口绑定有两种实现方式，一种时通过注解绑定，就是再接口的方法上加上@Select、@Update等，里面包含sql语句来绑定
+		另外一种就是通过xml里面写sql来绑定，再这种情况下，要指定xml映射文件里面的namespace必须为接口的全路径名。
+		当sql语句比较简单的时候用注解绑定，当sql语句比较复杂的时候用xml绑定，一般用xml绑定的多
+	85 使用MyBatis的mapper接口调用时有哪些要求？
+		mapper几口中方法名和mapper.xml文件中定义每个sql的id相同
+		mapper接口方法的输入参数类型和mapper.xml中定义的每个sql的parameterType的类型相同
+		mapper接口方法的输出参数类型和mapper.xml中定义的每个sql的resultType的类型相同
+		mapper.xml文件中的namespace即时mapper接口的类的全限定路径名
+
+	

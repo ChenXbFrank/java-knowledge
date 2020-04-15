@@ -1,0 +1,464 @@
+一、	Spring
+1.	Spring框架优点？
+	非侵入式设计 使得硬硬充许代码对框架的依赖最小化
+	方便解耦、简化开发 spring是一个大工厂，可以将所有对象的创建和依赖关系的维护工作都交给Spring容器的管理，大大的降低了组件之间的耦合性。
+	AOP 提供AOP支持，允许将一些通用任务，如安全、事务、日志等进行集中式处理，从而提高了程序的复用性。
+	支持声明式事务处理 只需要通过配置就可以完成对事物的处理，而无需手动编程
+	方便程序的测试 提供了对Junit4的支持，可以通过注解方便测试Spring程序
+2.	谈谈你对spring IOC和DI的理解，它们有什么区别？
+	IOC和DI是同一个概念的不同层面的描述。
+	IOC 是一种思想 传统的思想实现是我们手动创建对象，自己正向new对象，但是IOC是控制反转。
+		控制：IOC容器帮我们生成控制管理对象，不需要我们手动的去创建
+		反转：由原先我们手动new对象，变为被动的由IOC来帮我们注入依赖。
+	DI 依赖注入即由容器将某个对象注入到我们的组件中。依赖注入并没有位系统带来新的功能而是为我们提高了组建的重用率。
+		通过依赖注入机制，我们只需要简单的配置，无需任何代码就可以获取对象资源，让我们更注重自身的业务逻辑，而不需要关心资源的具体来源。
+3.	spring配置bean实例化有哪些方式？
+		使用构造器
+			<bean name="a" class="a.a">
+				<constructor-arg index="0" value="a" />
+			</bean>
+		使用静态工厂方式实例化Bean
+			public class H {
+				public static H newInstance(){
+					return new H();
+				}
+			}
+			<bean id="h" class="h.H" factory-method="newInstance" />
+		使用实例工厂方式实例化Bean
+			public class H {
+				public static H newInstance(){
+					return new H();
+				}
+			}
+			<bean id="h" class="h.H"/>
+			<bean id="hh" factory-bean="h" factory-method="newInstance" />
+		使用setter方式
+			public class H {
+				private String name;
+				public void setName(String name){
+					this.name = name;
+				}
+			}
+			<bean name="h" class="h.H" id="H">
+				<property name="name" value="HHH"/>
+			</bean>
+4.	请介绍一下Spring框架中Bean的生命周期和作用域
+		一共有5种作用域：
+			singleton：再SpringIOC容器种仅存在一个Bean实例，Bean以单例方式存在，默认只。
+			prototype：每次从容其中调用Bean时，都返回一个新的实例，即每次调用getBean()时，相当于执行new xxBean()
+			request：  每次HTTP请求都会创建一个新的Bean，该作用域仅适合WebApplicationContext环境
+			session：  同一个HTTP Session共享一个Bean,不同Session使用不同Bean，仅适用于WebApplicaitonContext
+			globalSession：，该作用域仅适用于WebAPplicationContext环境
+		生命周期：
+			Spring之帮助我们管理单例模式Bean的完整生命周期，对于prototype的bean，Spring在创建好后则不会再管理后续的生命周期
+			1.实例化一个Bean
+			2.按照Spring上下文对实例化Bean进行配置，也就是IOC注入
+			3.如果这个Bean已经实现了BeanNameAware接口，会调用它实现的setBeanName(String)方法啊，传递的参数就是Spring配置文件中Bean的id值
+			4.如果这个Bean已经实现了BeanFactoryAware接口，会调用它实现setBeanFactory传递的是Spring工厂自身
+			5.如果这个Bean已经实现了ApplicaitonContextAware接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文。
+			6.如果这个Bean关联了BeanPostProcessor接口，将会调用postProcessBeforeInitialization方法，BeanPostProcessor经常被用作是Bean额内容的更改，并且由于这个是在Bean初始化结束时调用那个的方法，也可以被应用于内存或缓存技术
+			7.如果Bean在Spring配置文件种配置了init-method属性将会自动调用其配置的初始化方法
+			8.如果这个Bean关联了BeanPostProcessor接口，将会调用postProcessAffterInitialization方法。
+			9.当Bean不再需要时，会经过清理阶段，如果Bean实现了DisposableBean这个接口，会调用那个实现的destroy()方法。
+		   10.最后如果这个Bean的Spring配置种配置了destroy-method属性，会自动调用其配置的销毁方法。
+5.	Bean注入属性有哪几种方式一般用于Portlet应用环境？
+		GlobalSession
+6.	@Autowired和@Resource之间的区别
+		@Autowire默认按照类型去匹配  它是Spring自带的注解
+		@Resource默认按照名称去匹配，名称匹配不到自动去类型匹配。J2EE自带的注解。
+7.	什么是AOP，AOP的作用是什么？
+	AOP 简单说就是哪些与业务无关，却为业务模块共同调用的逻辑或责任封装起来，便于减少系统的重复代码，降低模块之间的耦合度，有利于未来的可操作性和可维护性。
+	使用横切技术，AOP把软件系统分为两个部分：核心关注点和横切关注点。业务处理的主要流程是核心关注点，与之关系不大的部分是横切关注点。
+	横切关注点的一个特点是，他们经常发生在核心关注点的多出，而各处基本相似，比如权限认证、日志、事务等。AOP的作用在于分离系统种的各种关注点，将核心关注点和横切关注点分离开来。
+8.	Spring里面如何配置数据库驱动？
+		<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<property name="driverClassName">
+				<value>${jdbc.driverClassName}></value>
+			</property>
+			<property name="url">
+				<value>${jdbc.url}</value>
+			</property>
+			<property name="password">
+				<value>${jdbc.password}</value>
+			</property>
+		</bean>
+9.	介绍一下Spring的事物管理
+	Sprin在不同的事务管理API上定义了一个抽象层。而应用程序开发人员不必了解底层的事务管理API，就可以使用Spring的事务管理机制
+	Spring即支持编程式事务管理，也支持声明式事务管理
+	最常见的事务管理器：DataSourceTransactionManager
+	
+	在Spring种，声明式事务是通过事务属性来定义的，事务属性描述了事务策略如何应用到方法上。事务属性包含了5个方面尽管Spring提供了多种声明式事务的机制，但是所有的方式都依赖这5个参数来控制如何管理事务策略。声明式事务通过传播行为，隔离级别，只读提示，事务超时及回滚规则来进行定义。
+10.	通知有哪些类型？
+	前置通知 后置通知 环绕通知 异常通知 最终通知
+11  不用web架构能使用spring技术么?为什么?
+	可以使用，spring只是一个粘合剂，并非web相关。
+12  在 Spring中如何注入一个java集合？
+	<bean id="a" class="A">
+		<property name="empList">
+			<list>
+				<ref bean="a" />
+				<ref bean="c" />
+			</list>
+		</property>
+	</bean>
+二、	SpringMVC
+1.	springmvc框架是什么?常见的mvc框架有哪些?他们的区别是什么?
+		SpringMVC是一个MVC的web框架。
+		SpringMVC有控制器跟structs类似，接收外部请求，解析参数传给服务层。
+2.	阐述一下springmvc的运行流程
+		首先用户发送请求被前端控制器接收DispatcherServlet，前端控制器请求HandlerMapping根据url查找相应的handler，
+		处理器应设置HandlerMapping找到handler后返回给DispatcherServlet，DispatcherServlet去执行Handler也就是Controller执行具体的业务逻辑，
+		然后Handler执行完后返回ModelAndModel给DispatcherServlet，DispatcherServlet去请求视图解析器，根据逻辑视图名解析为真正的视图，然后返回给DispatcherServlet一个View
+		DispatcherServlet再根据返回来的View进行视图渲染，就是将Model写入到Request区域，最终前端控制器响应给用户结果。。
+3.	Spring MVC的主要组件有哪些  他们的作用是什么
+	DispatcherServlet 程序入口
+	HandlerMapping 请求派发，负责根据url查找Handler处理器
+	Handler 处理器
+	ModelAndView 封装模型和视图信息
+	ViewResolver 视图处理器
+4.	SpringMVC怎么样设定重定向和转发的？默认是请求转发还是重定向?
+	return "forward:a";/redirect
+	默认是请求转发
+5.	SpringMvc怎么和AJAX相互调用的？
+		使用@ResponseBody注解
+6.	springmvc中如何解决POST请求中文乱码问题，GET的又如何处理呢？
+	POST请求再web.xml种配置过滤器
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>foceEncoding</param-name>
+			<param-value>true</param-name>
+		</init-param>
+	</filter>
+	
+	get乱码可以在tomcat种service.xml种配置URIEncoding="utf-8"也可以用new String("a".getBytes(),"utf-8")
+7.	Spring MVC如何做异常处理 ？
+		局部处理：
+			@ExceptionHandler
+			public ModelAndView error(Exception e) {
+				ModelAndView m = new ModelAndView();
+				m.addObject("error",e.getMessage());
+				m.setViewName("error");
+				return m;
+			}
+		全局处理
+		@ControllerAdvice
+		public class ExcepitonController {
+			@ExceptionHandler
+			public ModelAndView error(Exception ex) {
+				ModelAndView m = new ModelAndView();
+				m.addObject("error", ex.getMessage());
+				m.getViewName("error");
+				return m;
+			}
+		}
+8.	SpringMvc的控制器是不是单例模式,如果是,有什么问题,怎么解决？
+	 是单例模式，所以在多线程的情况下会有线程安全问题，不要同步，会影响性能
+	 决绝方案是不能在控制器里面写字段
+9.	SpringMVC常用的注解有哪些？
+		@Controller
+		@RestController
+		@Component
+		@Repository
+		@Service
+		@ResponseBody
+		@RequestMapping
+		@Autowired
+		@PathVariable
+		@RequestParam
+		@RequestHeader
+		@Scope
+10.	SpringMvc中函数的返回值是什么？
+	ModelAndView
+	Model
+	String
+	void
+三、	Shiro
+1.	说一下什么是rbac,设计一个基于rbac的数据库模型,并解释每个模型之间的关系
+		rbac基于角色的访问控制
+2.	说一下什么是shiro,并且说出shiro的优点
+	Shiro是一个Java平台的开源权限框架，用于认证和访问授权。
+	见到那移动，开源框架，可以实现 认证 授权 加密 会话管理
+3.	简述 Shiro 的核心组件
+		Subject:应用代码直接交互的对象是Subject，也就是说Shiro的对外API核心就是Subject
+		SecurityManager：安全管理器 即所有与安全有关的操作都会与SecurityManager交互；且其管理者所有Subject；可以看出它是Shiro的核心，它负责与Shiro的其它组件进行交互，它相当于SpringMVC的DispatcherServlet角色
+		Realm：Shiro从Realm获取安全数据（如用户、角色、权限），也就是说SecurityManager需要验证用户身份，那么它需要从Realm获取相应的用户进行比较确定用户身份是否合法；也需要从Realm得到用户相应的角色/权限进行校验用户是否能进行操作。
+4.	简述Shiro认证过程
+	1.构建SecurityManager工厂
+	2.通过SecurityManagerFactory工厂获取SecurityManager实例
+	3.将SecurityManager设置到运行环境中
+	4.获取Subject实例
+	5.创建用户名、密码验证令牌Token
+	6.进行身份验证
+	7.判断是否通过验证
+5.	简述Shiro授权过程
+	首先调用Subject.isPermitted*/hasRole*接口，其会委托给SecurityManager，而SecurityManager接着会委托给Authorizer
+	Autorizer是真正的授权者，如果我们调用isPermiteed("user:view"),其首先会通过PermissionResolver把字符转换成相应的Permission实例。
+	在进行授权之前，其会调用相应的Realm获取Subject相应的角色/权限用于匹配传入的角色/权限。
+	Authorizer会判断Realm的角色/权限是否和传入额匹配，如果有多个Realm，会委托给ModularRealmAuthorizer进行循环判断，如果匹配ruisPermitted*/hashRole*会返回true，否则返回false表示授权失败
+四、	Maven
+1.	Maven有哪些优点和缺点
+	 优点：
+		1.简化了项目依赖管理
+		2.便于项目升级
+		3.有助于多模块开发
+		4.maven有很多插件，便于功能扩展
+	缺点：
+		1.难调试
+		2.很多repository无法访问。
+2.	Maven坐标由什么组成,分别代表什么意思
+	group id 公司域名倒写
+	artifact id 项目名
+	version 版本号
+	packaging 项目类型
+3.	pom文件中常见的标签有哪些,分别代表什么意思
+	dependencies：依赖集
+	dependency：具体依赖
+	parent：父项目的坐标
+4.	常见的Maven私服的仓库类型有哪些
+	hosted 和 proxy
+5.	maven项目的关系有哪些?
+	依赖
+	继承
+	聚合
+6   maven的工程关系是怎样的?
+	pom工程
+	jar工程
+	war工程
+7  maven常见的命令有哪些?代表什么意思?
+	mvn compile 编译，将java编译成class字节码文件
+	mvn test 测试，并生成测试博爱高
+	mvn clean 将以前编译得到旧的class 字节码文件删除
+	mvn package 打爆，动态web工程打爆，java 工程jar打包
+	mvn install 将项目生成jar包放入仓库
+五、	Zookeeper
+1.	什么是Zookeeper？ 	Zookeeper的作用是什么？
+	Zookeeper是一个分布式的、开源的程序协调服务，是hadoop项目下的一个子项目。它提供的主要功能包括：配置管理、名字服务、分布式锁、集群管理
+2.	什么是Znode？	Znode节点类型有哪些？
+	znode是一个跟unix文件系统路径相类似的节点，可以往这个节点存储或获取数据。不能存放大量的数据，每个节点的存放数量上限为 1MB
+	节点类型：
+		PERSISTENT 持久化节点
+			客户端与zk断开连接后，该节点一九存在
+		PERSISTENT_SEQUENTIAL 持久化顺序节点
+			客户端与zk断开后节点依旧存在，只是zk给该节点名称进行顺序编号
+		EPHEMERAL 临时目录节点
+			客户端与zk断开连接后，该节点被删除
+		EPHEMERAL_SEQUENTIAL 临时顺序编号目录节点
+3.	Zookeeper集群中的角色主要有哪三类？	请阐述Zookeeper的集群原理是什么？、
+		leader
+		follower
+		observer
+		
+		Zookeeper的集群原理：zk是由多个server组成的集群，一个leader，多个follower，每个server保存一个数据副本，全局数据一直，分布式读写，更新请求和转发由leader实施。
+4.	如何启动Zookeeper？
+	./zkServer.sh start
+5.	如何关闭Zookeeper？
+	./zkServer.sh stop
+6.	如何查看Zookeeper状态？
+	./zkServer.sh status
+7.	如何查看Zookeeper状态？
+	./zkServer.sh status
+8.	Connect命令的作用是什么？
+	用于切换集当中任意一个节点的命令 connect host:port
+9.	Ls命令的作用是什么？
+	显示列表路径下的资源 比如ls /
+10.	Create命令的作用是什么？
+	创建节点 create [-e] [s] path data   e临时节点 s顺序节点
+11.	Get命令的作用是什么？
+	get path 查看指定节点数据
+
+
+
+六、	Linux
+1.	绝对路径用什么符号表示？当前目录、上层目录用什么表示？主目录用什么表示? 切换目录用什么命令？
+		绝对路径表示 /
+		当前目录 .
+		上层目录 ../
+		主目录 ~
+		切换目录 cd 
+2.	怎么查看当前进程？怎么执行退出？怎么查看当前路径？
+	ps
+	Ctrl+C
+	pwd
+3.	怎么清屏？怎么退出当前命令？怎么执行睡眠？怎么查看当前用户 id？查看指定帮助用什么命令？
+	clear
+	Ctrl+c
+	sleep 函数
+	id 用户名
+	命令 --help
+4.	Ls 命令执行什么功能？ 可以带哪些参数，有什么区别？
+	ls 列出当前文件夹下所有文件及目录
+	ls -a 包括隐藏文件
+	list -l 每行都列出一个文件
+5.	目录创建用什么命令？创建文件用什么命令？复制文件用什么命令？
+	mkdir 
+	touch
+	cp
+6.	查看文件内容有哪些命令可以使用？
+	cat
+	more
+	head
+	tail
+7.	随意写文件命令？怎么向屏幕输出带空格的字符串，比如”hello world”?
+	vi/vim
+	echo "hello world"
+8.	移动文件用哪个命令？改名用哪个命令？
+	mv
+	mv 文件 新名字
+9.	复制文件用哪个命令？如果需要连同文件夹一块复制呢？如果需要有提示功能呢？
+	cp
+	cp -r
+	cp -i
+10.	删除文件用哪个命令？如果需要连目录及目录下文件一块删除呢？删除空文件夹用什么命令？
+	rm
+	rm -rf
+	rm -r
+11.	利用 ps 怎么显示所有的进程? 怎么利用 ps 查看指定进程的信息？
+	ps a
+	ps aux|grep 进程keywords
+12.	终止进程用什么命令? 带什么参数?
+	kill
+	-s 指定发送的信号
+	-p 模拟发送信号
+	- l 指定信号名称列表
+	pid 要终止进程的id号
+	signal 表示信号
+13.	使用什么命令查看网络是否连通?
+	ping
+
+七 Dubbo
+1 dubbo是什么?
+	Dubbo是阿里巴巴公司开源的一个高性能优秀的服务框架，使得应用可通过高性能的RPC实现服务的输出和输入功能。可以和Spring框架无缝继承。基于spring容器运行。
+2 为什么要用dubbo?
+	随着单体应用架构的客户量越来越大，服务器的压力也随之负重起来，可以增加应用服务器在短期内可以产生非常大的成效，但是长期看投入的产出比对会逐渐下降。这时候对服务进行分析
+	我们可以将各种业务服务之间的调用关系通过某种RPC技术进行调整问题随着而来
+		1.地址维护（URL越来越多）
+		2.负载均衡
+		3.限流/容错/降级
+		4.链路监控
+		5.各种依赖关系
+	这个时候Dubbo的优势就出来饿了，它完全覆盖这些优势。
+3 dubbo和springcloud有什么区别?
+	dubbo是阿里巴巴开源的项目
+	spring cloud是属于spring家族的。
+	springcloud的集成度和完善都更为强。dubbo的虽然简洁，但是许多功能也是都可以实现的。
+	Dubbo使用RPC通信，而SpringCloude使用HTTP RESTFul方式。
+4 dubbo都支持什么协议?推荐用哪种?
+	dubbo
+	hessian
+	http
+	WebService
+	RMI
+	推荐使用自带的dubbo协议
+5 dubbo需要web容器么?
+	dubbo的容器模块是一个独立的容器，因为服务通常不需要tomcat/JBoss等web容器的特性，没必要用web容器去加载服务。
+	服务只需要一个简单的main方法，并加载一个简单的Spring容器，用于暴露服务。
+6 dubbo内置了哪几种服务器容器?
+	Spring Container
+	Jetty Container
+	Log4j Container
+7 dubbo里面有哪几种节点角色?分别代表什么意思?
+	provide：暴露服务的服务提供方
+	consumer：调用远程服务的服务消费方
+	registry：服务注册与发现的注册中心
+	monitor：统计服务调用次数和调用时间的监控中心
+	container：服务运行容器
+8 画一画服务注册与发现的流程图
+	1.启动Spring容器时，自动启动Dubbo的Provider
+	2.register：Dubbo的Provider启动后会自动去注册中心注册内容
+		provider 的ip
+		provider 的端口
+		provider 对外提供的接口列表，哪些方法，哪些类
+		dubbo 的版本
+		访问provider 协议
+	3.subscribe：订阅，当Consumer启动的时候会自动去注册中心Registry获取到所有已经注册的provider信息
+	4.notfiy：通知，当Provider的信息发生变化的时候，注册中心Registry会去通知Consumer
+	5.invoke：当Consumer去请求provider的时候是同步方法，消耗一定性能，但是必须同步为了返回结果
+	6.count：次数 每个2分钟 consumer和provider自动向Monitor发送访问次数。Monitor进行统计
+9 dubbo默认使用什么注册中心?还有别的选择么?
+	默认使用Zookeeper作为注册中心
+	还有reis、simple等
+10 dubbo有哪几种配置方式?
+	xml
+	属性
+	注解
+	api配置
+11 dubbo的核心配置有哪些?
+	dubbo:service 服务配置
+	dubbo:reference 引用配置
+	dubbo:protocol 协议配置
+	dubbo:applicaiton 应用配置
+	dubbo:module 模块配置
+	dubbo:registry 注册中心配置
+	dubbo:monitor 监控中心配置
+	dubbo:provider 提供方配置
+	dubbo:consumer 消费方配置
+	dubbo:method 方法配置
+	dubbo:argument 参数配置
+12 在provider上可以配置的consumer端的属性有哪些?
+	timeout：方法调用超时
+	retries：失败重试次数，默认2此
+	loadbalance：负载均衡算法，默认随机
+	active：消费端，最大并发调用限制
+13 dubbo启动时如果依赖的服务不可用会怎样?
+	dubbo服务启动时候默认会检测依赖，如果依赖不可用的话，直接抛出异常，从而阻断spring初始化完成。默认 check="true" 设置为false关闭
+14 dubbo推荐使用什么序列化框架?你知道的还有哪些?
+	推荐使用Hessian序列化，，还有Dubbo，FastJson、Java自带的序列化。
+15 dubbo默认使用的是什么通信框架?还有别的选择么?
+	Dubbo默认选择的是Netty框架，也是推荐的选择，另外内容继承由Mina、Grizzly。
+16 dubbo有哪几种集群容错方案?默认是哪种?、
+	Failover Cluster 失败自动切换，自动重试其它服务器（默认）
+	Failfast Cluster 快速失败，立即报错，只发起一次调用
+	Failsaft Cluster 失败安全，出现异常时，自动忽略
+	Failback Cluster 失败自动恢复，记录失败请求，定时重发
+	Forking Cluster 并行调用多个服务器，只要一个成即返回。
+	Broadcast Cluster 广播逐个调用所有提供者，任意一个报错则报错。
+17 dubbo有哪几种负载均衡策略?默认是哪种?
+	随机模式：按权重设置随机概率。在一个截面上碰撞概率较高，但调用越大分布越均匀  默认
+	轮询模式 按公约后的权重设置轮询比例。但存在响应慢的服务器提供者会积累请求
+	最少活跃调用数 
+	一致hash 根据服务提供者ip设置hash环，携带相同的参数总是发送的同一个服务提供者，弱服务挂了，则会基于虚拟节点平摊到其它提供者上
+18 如果注册了多个同样的服务,如何测试指定的某一个服务?
+	可以配置环境点对点直连，绕过注册中心，将以服务接口为单位，沪铝注册中心的提供者列表
+19 dubbo支持服务多协议么?
+	Dubbo 允许配置多协议，在不同服务上支持不同协议或者同意服务上同时支持多种协议
+20 当一个服务接口有多种实现时怎么做?
+	当一个接口有多种实现的时候，可以用group属性来分组，服务提供方和消费方都指定同一个group即可。
+21 服务上线怎么兼容旧版本?
+	可以用版本号（version）过度，多个不同版本的服务注册到注册中心，版本号不同的服务互相间不引用。这个和服务分组的概念有点类似。
+22 dubbo可以对结果进行缓存么?
+	Dubbo提供了声明式缓存，用于加速热门数据的访问速度，以减少用户加缓存的工作量。
+23 dubbo服务之间的调用时阻塞的么?
+	默认是同步等待结果阻塞的，支持异步调用。
+24 dubbo支持分布式事务么?
+	不支持
+25 dubbo如何优雅停机?
+	通过JDK的ShutdownHook函数，如果kill -9 pid等指令来关闭是不会优雅停服的，通过kill pid是可以支持的。
+26 dubbo的管理控制台能做什么?
+	可以进行Dubbo的路由规则，动态配置，服务降级，访问控制，权重调整，负载均衡等管理。
+27 你还了解其他分布式框架么?
+	SpringCloud 
+28 dubbo能集成springboot么?
+	可以集成
+29 你在使用dubbo的过程中都碰到过什么问题?
+	在大数据量下的性能表现并不是好呢好因为为了满足高并发小数据量dubbo使用rpc调用，大数据量建议使用rmi或http协议。
+	在使用Dubbo的默认协议情况下，传输文件数据是不可以的，需使用hessian
+30 你觉得dubbo好用还是springCloud好用?
+	扩展性问题，没有好坏，只有合适不合适，dubbo国内资料齐全，spring cloud生态体系更加完善。看个人以及业务需求等。个人倾向Spring Cloud
+八 VSFTPD
+1 什么是VSFTPD?为什么需要VSFTPD?
+	VSFTPD是一款ftp服务器，它的安全性是它的一个最大的特点，是一个unix类操作系统上运行的ftp服务器软件。完全免费。
+2 简单介绍一下你是如何配合FTPClient完成图片上传到FTP服务器的
+	搭建好了ftp服务器之后，就可以配合java的FTPClient对象上传图片了。
+	需要注意的是，在上传的时候需要指定filetype 为 FTPClient.BINARY_FILE_TYPE  为二进制类型。可以解决图片损坏的问题。
+
+
+
+
+
+

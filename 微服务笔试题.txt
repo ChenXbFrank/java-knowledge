@@ -1,0 +1,383 @@
+springboot
+	1、什么是springboot
+		SpringBot是用来简化新Spring应用的初始搭建以及开发过程发的。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化配置。
+	2、Spring Boot有哪些优点？ 
+		基于Spring 4
+		简化编码
+		简化配置
+		简化监控
+	3、如何重新加载Spring Boot上的更改，而无需重新启动服务器？
+		可以配置devtools 自动重新部署项目
+	4、Spring Boot中的监视器是什么？ 
+		SpringBootActuator可以帮助我们访问生产环境中正在运行的应用程序的当前状态。
+	5、什么是YAML？ 
+		yml是一种直观的能够被电脑识别的数据列格式，是一个可读性高容易被人类阅读的编程语言。多用于配置文件。
+	6、如何集成Spring Boot和ActiveMQ？ 
+		我们只需要使用spring-boot-starter-activemq依赖关系，然后很少的配置即可。
+	7、springboot常用的starter有哪些 
+		spring-boot-starter-web 嵌入tomcat
+		spring-boot-starter-data-jpa jpa支持
+		spring-boot-starter-data-redis redis数据库支持
+		spring-boot-starter-data-solr solr支持
+		mybatis-spring-boot-starter 第三方的mybatis继承starter
+	8、springboot自动配置的原理 
+		首先我们会将配置文件写入applicaiton.properties/yml的全局配置文件中。
+		然后再SpringBoot启动类的@SpringBootApplicaion注解上我们可以发现里面有@EnableAutoConfiguration注解意思就是启用自动配置，然后在启动时候会通过@EnableAutoConfiguraiton注解找到META-INF/spring.factories配置文件中的所有自动配置类，并对其进行加载，
+		而这些自动配置类都是以AutoConfiguration结尾来命名的，它实际上就是一个javaConfig形式的spring容器配置类，它能够通过以properties结尾命名的类中取得在全局配置文件中配置得属性如：server.prot,因为里面配置了@EnableConfigurationProperties(需要加载的属性类Proerpties.class)
+		而XxxProperties类是通过@ConfigurationProperties注解的prefix前缀与全局配置文件中对应得属性进行绑定得。
+	9、springboot读取配置文件的方式 
+		@Value("${}")
+		@ConfigurationProperties+@Configuration注解
+		@PropertySource配合@Vaue 
+			@Configuration
+			@PropertySource(value = {"classpath:config/teacher.properties"})
+			@Value("${name}")
+		@ConfigurationProperties配合PropertySource+@Value
+			@Configuration
+			@PropertySource(value = {"classpath:config/a.properties"})
+			@ConfigurationProperties(prefix = "a")
+			@Value("${name}")
+		@ConfigurationProperties+@Value
+		Environment对象
+			@Autowired
+			Environment env;
+			env.getProperty("server.port");
+	10、springboot集成mybatis的过程 
+		首先添加有关mybatis的依赖和连接数据库的
+			mybatis-spring-boot-starter
+			mysql-connector-java
+		创建全局配置文件applicaiton.yml/properties添加数据库的配置信息 和 mybatis的配置信息
+		spring:
+			datasource:
+				driver-class-name: com.mysql.jdbc.Driver
+				url: jdbc:mysql:///test?useUnicode=true@CharacterEncoding=utf8
+				username: root
+				password: pwd
+		mybatis:
+			type-aliases-package: 别名包
+			mapper-location: classpath:mapper/*.xml
+		接下来就开始创建代码了。
+				
+	11自定义springboot-starter注意事项
+		springboot默认scan的包名是其所在的包名结构目录。如果引入其它的starter包名不一样，需要手动指定
+		@ComponentScan(basePackages = {"xxx",""})或者把springboot启动类放到根包下。
+		对于starter中有feign的需要额外指定
+		@EnableFeignClients(basePackages = {""})
+	12  Spring Boot、Spring MVC 和 Spring 有什么区别？	
+			spring boot只是一个配置工具，整合工具辅助用的，用于简化代码和配置
+			springmvc是框架，mvc框架，实际运行业务代码的主框架。
+			spring 是一个为他们提供动力的引擎。比如IOC DI AOP等
+	13 创建一个 Spring Boot Project 的最简单的方法是什么？
+		登录spring官网，有专门提供一键生成springboot项目的工具。
+	14 为什么我们需要 spring-boot-maven-plugin?
+		当添加了spring-bot-maven-plugin的时候运行mvn package进行打包，会打包成一个可以直接运行的jar文件。使用java -jar就可以直接运行。
+	15 如何在 Spring Boot 中添加通用的 JS 代码？
+		/src/main/reosurces/static是spring boot启动时 静态内容的建议文件夹。可以在该目录下面创建js文件。
+	16 SpringBoot的核心注解是哪个？它主要由哪几个注解组成的？
+		启动类上面的注解是@SpringBootApplicaiton，他是SpringBoot的核心注解。里面包含了以下3个注解：
+		@SpringBootConfiguration：组合了@Configuration注解，实现配置文件功能。
+		@EnableAutoConfiguration：打开自动配置的功能，也可以关闭某个自动配置的选项，如关闭数据源自动配置功能：@SpringBootAPplication(exclude = {DataSourceAutoConfiguraiton.class});
+		@ComponentScan：Spring组件扫描
+	17 Spring Boot 的配置文件有哪几种格式？它们有什么区别？
+		.properties .yml 他们主要区别是书写格式不同
+		另外yml格式不支持@PropertySource
+	18 Spring Boot 的核心配置文件有哪几个？它们的区别是什么？
+		applicaiton 和 bootstrap
+		application主要用于springboot自动化配置文件
+		bootstrap文件主要用于：
+			如spring cloud config注册中心需要在bootstrap配置文件中添加链接到配置中心的配置属性来加载外部配置中心信息
+			一些加密/解密场景
+			一些固定不能被覆盖的属性
+		而且bootstrap的加载顺序要高于application
+	19 开启SpringBoot特性有哪几种方式？
+		继承spring-boot-starter-parent
+		导入spring-boot-dependencies
+	20 运行SpringBoot有哪几种方式？
+		直接运行SpringApplicaiton.run
+		mvn install 生成jar包，然后java -jar运行
+	21 如何在 Spring Boot 启动的时候运行一些特定的代码？
+		实现ApplicationRunner，再启动后会执行这个里面的run方法。
+	22 Spring Boot 有哪几种读取配置的方式？
+		@Value("${}")
+		@ConfigurationProperties+@Configuration注解
+		@PropertySource配合@Vaue 
+			@Configuration
+			@PropertySource(value = {"classpath:config/teacher.properties"})
+			@Value("${name}")
+		@ConfigurationProperties配合PropertySource+@Value
+			@Configuration
+			@PropertySource(value = {"classpath:config/a.properties"})
+			@ConfigurationProperties(prefix = "a")
+			@Value("${name}")
+		@ConfigurationProperties+@Value
+		Environment对象
+			@Autowired
+			Environment env;
+			env.getProperty("server.port");
+	23 Spring Boot 支持哪些日志框架？推荐和默认的日志框架是哪个？
+		log4j log4j2 logback
+		默认日志 logback
+		
+	24 Spring Boot 如何定义多套不同环境配置？
+		application-dev.properties
+		application-test.properties
+		applicaiton.prod.properties
+		使用java -jar --spring.profiles.active = dev
+	25 Spring Boot 可以兼容老 Spring 项目吗，如何做？
+		可以兼容，使用@ImportResource导入旧配置文件
+		@SpringBootApplication
+		@ImportResource(locations= {"classpath:spring.xml"})
+		public class App {
+			public static void main(String[] args) {
+				SpringApplication.run(Application.class,args);
+			}
+		}
+	26 Spring Boot 2.X 有什么新特性？与 1.X 有什么区别？
+		2.x至少需要JDK 8支持，2.X里面许多方法应用了JDK8的许多高级新特性，所以你要升级2.0必须兼容jdk8
+		很多类发生了变化，类名等，也去掉了很多类
+	27 说说springboot的定时任务如何书写
+		添加依赖 spring-boot-starter-quartz
+		在启动类上添加注解@EnableScheduling
+		之后就可以写定时任务了
+	
+springdata
+	1 JPA 和 Hibernate 有哪些区别？
+		JPA和Hibernate之间的主要区别在于JPA是一个规范。Hibernate是Red Hat对JPA规范的实现。
+	2 说说常见的持久化技术,并详细介绍一下springdata
+		常见的持久化技术：
+			Hibernate JPA Mybatis、EJB、JDBC
+		SpringData是sring的一个子项目。用于简化数据库的访问，支持NoSQL和关系型数据库存储。其主要目标是使数据库的访问变得方便快捷。
+	3 阐述Spring Data JPA的继承结构。
+		Repository->CrudRepository->PagingAndSortingRepository->JpaRepository
+	4 阐述Spring Data JPA的底层运行原理。
+		底层使用了jdk生成动态代理对象，真正干活的对象使SimpleJpaRepository
+	5 Repository接口的作用是什么？
+		Repository：最顶层的接口，一个空的接口，同意所有的Repository类型，并且能够让组件扫描的时候能够自动识别
+		CrudRepository：Reository的子接口，提供CRUD操作
+		PagingAndSortingRepository：CrudRepository的子接口，添加了分页和排序的功能。
+		JpaRepository：使PagingAndSortingRepository的子接口，增加了一些使用的功能，比如批量删除
+		JpaSpecificationExecutor：来定义复杂查询。
+	6 Repository接口支持几种查询方式？
+		4种
+		基本的查询 如JpaSpecificaitonExecutor
+		Jpql查询
+		sql查询
+		方法命名规则查询
+	7 什么是方法命名规则查询？
+		顾名思义，这种方法就是使用Spring Data JPA规定的方法名进行查询，这种方式不需要我们写jpql或者sql，spring data jpa解析方法名帮助我们自动创建查询
+	8 什么是自定义Repository接口？自定义Repository接口解决了什么问题？
+		就是按照SpringDataJPA的规范自己定义Repository接口类，可以更加方便灵活的处理我们的问题。
+springcloud
+	1 什么是Spring Cloud？
+		SpringCloud是一个微服务框架，相比Dubbo等RPC框架，SpringCloud提供的全套的分布式系统解决方案。
+	2 使用Spring Cloud有什么优势？
+		分布式/版本化配置
+		服务注册和发现
+		路由
+		服务和服务之间的调用
+		负载均衡
+		断路器
+		分布式消息传递
+	3 服务注册和发现是什么意思？Spring Cloud如何实现？
+		将服务信息等上传至服务器称为服务注册，然后另一个服务来取注册的服务查找信息称为服务发现。
+		SpringCloud通过Eureka实现了服务的注册与发现。
+	4 什么是Hystrix？它如何实现容错？
+		Hystrix是一个延迟和容错库，旨意=在隔离远程系统，服务和第三方库的访问点。当出现故障时不可避免的故障时，停止级联故障并在复杂的分布式系统中实现弹性。
+		可以用Hystrix定义fallback方法，返回一些托底数据。或者短融、隔离、cache等。
+	5 什么是Hystrix断路器？我们为什么需要它吗？ 
+		当Hystrix Comand请求去后端服务失败数量超过一定默认比例（默认50%），断路器会自动开启为开路状态，这时候所有的请求会直接失败，而不发送到后端。
+		断路器保持在开路状态一段时间后（默认5秒），自动切换到半开路状态，这时候会判断下一次请求的返回情况，如果请求成功断路器切换到闭路状态，如果请求失败，重新切换到开路状态.
+	6 什么是Netflix Feign？它的优点是什么？
+		Feign是一种声明式 模板化的HTTP客户端(仅在consumer中使用)
+		声明式调用的好处就是像调用本地方法一样调用远程方法;无感知远程http请求,让开发者无需关注与远程的交互细节,更无需关注分布式环境开发.
+	7 什么是Spring Cloud Bus？我们为什么需要它吗？
+		Spring Cloud Bus 继承了市面上常用的消息代理(rabbitmq\kafka等),连接微服务系统中的所有节点,当有数据变更时,可以通过消息代理广播通知微服务及时变更更数据:
+			例如:微服务额配置更新就可以及时通知并让微服务刷新配置,
+		它解决了微服务数据变更,及时同步的问题.
+	8 微服务的优点缺点?说下开发项目中遇到的坑?
+		优点:
+			松耦合,聚集单一业务功能,无关开发语言,团队规模降低.在开发中,不需要了解多有业务,更加专注.
+			只专注于当前功能,便于集中,功能小而精.微服务一个功能受损,对其他功能影响并不是很大,可以快速定位问题.
+			微服务只专注于当前业务逻辑代码.独立性更好
+		缺点:
+			随着服务数量增加,管理复杂,部署复杂,服务器需要增多,服务通信和调用压力增大,运维工程师压力增大.
+			人力资源增多,项目难度增大,数据一致性强等
+		我遇到的问题就是因为分布式项目都是相互调用相互关联,正巧有一台服务器的速度过慢,其它微服务不能及时得到数据,导致用户体验差.
+	9 spring cloud 和dubbo区别?
+		SpringCloud
+			采用http协议传输,带宽占比相较之下会比较大
+			集成更多,功能更加完善,生态体系庞大
+		Dubbo
+			二进制传输,占用带宽更少
+			相较之下集成的功能不是很多
+			国内资源文档丰富
+	10 REST 和RPC对比
+		REST是一种架构风格,指的是一组架构约束条件和原则.它并没有创造新的技术,组件或服务,只是使用web现有的特征和能力
+		RPC:作为架构微服务化的基础组件,它能大大降低架构微服务化的成本,提高调用方与服务方的研发效率,屏蔽跨进程调用函数的类复杂细节.让调用方感觉就像调用本地函数一样.
+	11 你所知道的微服务技术栈？
+		维度 spring cloud
+		服务开发：springboot spring springmvc
+		服务注册与发现：Eureka、Zookeeper
+		服务调用：REST、RPC
+		服务熔断器：Hystrix
+		服务服负载均衡：Ribbon Nginx
+		服务接口调用：Feign
+		消息队列：Kafka Rabbitmq activemq
+		服务配置中心管理：SpringCloudConfig
+		服务路由（API网关） Zuul
+		事件消息总线：SpringCloud Bus
+	12 微服务之间是如何独立通讯的?
+		微服务各个微服务可被独立部署，各个微服务直接是松耦合的。每个微服务仅关注于完成一件任务并很好地完成该任务。
+		同步消息：RPC、REST等
+		异步消息：消息队列，要考虑消息的可靠性、高性能等。
+	13 Eureka和Zookeeper区别
+		zookeeper
+			cp
+			支持kv存储数据
+			watch支持
+			集群监控不支持
+			多语言能力较弱，使用客户端
+		eureka
+			ap
+			不支kv存储数据
+			支持http多语言
+			watch支持
+			集群监控
+	14 eureka自我保护机制是什么?
+		一般情况下，微服务在Eureka上注册后，会每30秒发送心跳包，Eureka通过心跳来判断服务时候健康，同时会定期删除超过90秒还没有发送心跳包的服务。
+	15 什么是服务熔断？什么是服务降级?
+		熔断机制是应对雪崩效应的一种微服务链路保护机制。
+		服务降级一般是从整体负荷考虑。就是当某个服务熔断之后，服务器将不再被调用，此时客户端可以自己准备一个本地的fallback回调，返回一个缺省值。
+	16 什么是Ribbon？
+		Ribbon是基于HTTP和TCp的客户端负载均衡工具，他是就与Netflix Ribbon实现的。
+	17 什么是feigin？它的优点是什么？
+		Feign是一种声明式服务调用
+		声明式调用的好处就是像调用本地方法一样调用远程方法;无感知远程http请求,让开发者无需关注与远程的交互细节,更无需关注分布式环境开发.
+	18 Ribbon和Feign的区别？
+		Ribbon和Feign都是用于调用其它服务的，不过方式不同。
+		Ribbon是一个负载均衡客户端，它可以在客户端使用RestTemplate模拟HTTP请求，步骤相当繁琐
+		Feign实在Ribbon的基础上进行一次改进，是一个使用起来更加方便的HTTP客户端。
+			采用接口的方式，只需要创建一个接口，然后在上面添加注解即可，将需要调用的其它服务的方法自定义成抽象方法即可，不需要自己构建HTTP请求。
+			然后就像是调用自身工程的方法调用，而感觉步到是远程调用方法，使得编写 客户端变得非常容易。
+	19 什么是SpringCloudConfig?
+		由于常用的配置管理有很大的缺点，springcloudconfig采用了集中式的配置中心来管理每个服务的配置信息。sprincloudconfig配置中心，在微服务分布式系统中，采用服务端和客户端来提供可扩展的配置服务。
+		配置中心负责管理所有的服务的各种环境配置文件。配置服务中心默认采用Git方式存储配置文件，因此我们很容易部署修改。
+	20 Spring Cloud Gateway?什么是zuul?
+		网关职责：
+			1.统一入口：为全部微服务提供了唯一入口点，网管起到外部和内部隔离，保障了后台服务的安全性。
+			2.鉴权校验：识别每个请求的权限，决绝不符合要求的请求
+			3.动态路由：动态的将请求 路由到不同的后端集群中
+			4.减少客户端于服务的耦合，服务可以独立发展，通过网关来做映射。
+	21 一个简单的微服务架构应该包含哪些基础组件?
+		服务框架
+		服务网关
+		消息系统
+		配置中心
+		数据库
+		服务监控
+		服务治理
+		服务发现
+		服务追踪
+		自动化测试/部署
+	22 SpringCloud断路器作用是什么?
+		当Hystrix command请求后端服务失败数量超过一定比例 默认（50%），断路器会默认自动开启为开路状态，这时候所有的请求将直接失败，而不发送到后端。
+		断路器保持在开路状态默认5秒，自动切换到半开路状态，如果下一次请求成功将切换为闭路状态，请求失败将返回开路状态。
+	23 什么是CAP定理
+		CAP原则又称为CAP定理，指的是在一个分布式系统上，Consistency（一致性）、Availabilty（可用性）、Partition tolerance（分区容错性），三者不可兼得。
+	24 如何实现优雅停服
+		添加actuator的依赖 spring-boot-starter-actuator
+		配置启用shutdown endpoints.shutdown.enabled=true
+		禁用密码验证endpoints.shutdown.sensitive=false
+		发送一个关闭服务的url请求  必须要使用post方式 http://ip:port/shutdown
+	25 实现Eureka安全认证的步骤是什么？如果开启安全认证，注册中心在集群环境下各个节点访问时，如何传递用户名与密码？
+		在EurekaServer中添加spring-boot-starter-security包
+		修改配置文件台南佳
+			security.basic.enabled=true
+			security.user.name=user
+			security.user.password=pwd
+		访问节点时传递方式：eureka.client.serviceUrl.defaultZone=http://user:pwd@ip:port/eureka
+	26 什么情况下需要配置Ribbon的点对点直连？
+		不需要配置注册中心，直接点对点连接提供者。
+	27 在微服务的日志中记录每个接口URL，状态码和耗时信息
+			(1)	Logger.Level中NONE表示什么含义？
+				表示不记录任何信息，默认值
+			(2)	Logger.Level中BASIC表示什么含义？
+				记录请求方法、请求URL、状态码和用时
+			(3)	Logger.Level中HEADERS表示什么含义？
+				在basic基础上再记录一些常用信息
+			(4)	Logger.Level中FULL表示什么含义？
+				记录请求和响应的所有信息。
+	28 配置Feign负载均衡请求超时时间的作用是什么？配置Feign负载均衡请求超时时间分为几种方式？
+		设置了请求超时时间，在服务请求时，超过时间之后才会抛出异常，如果设置了重试次数还会重试，之后才会抛出异常，提高了程序的可用性。
+		两种：
+			全局配置
+				ribbon.ConnectTimeout=5000 请求连接的超时时间，默认时1秒 毫秒单位
+				ribbon.Readtimeout=5000 请求处理的超时时间
+			根据服务名称进行局部超时配置：
+				服务名称.ribbon.OkToRetryOnAllOperations=true 对所有操作请求都进行重试
+				服务名称.ribbon.MaxAutoRetries=2 对当前实例的重试次数
+				服务名称.ribbon.MaxAutoRetriesNextServer=0 切换实例的重试次数
+				服务名称.ribbon.ConnectTiomeout=3000 请求连接超时时间
+				服务名称.ribbon.ReadTimeout=3000 请求处理的超时时间。
+	29 什么是灾难性雪崩效应？造成雪崩原因是什么？解决灾难性雪崩效应有哪些方式？每种方式的特点是什么？
+		在微服务系统中相互依赖度高，微服务数量庞大，如果一个服务，比如最顶端的数据访问层崩了，那么就导致大量的请求积压，一个积压一个，导致所有服务最终积压大量请求得不到回应而崩溃。
+		解决方式：
+			降级
+				超时降级，资源不足（线程或信号量）降级，降级后可以配合降级返回托底数据。实现一个fallback方法，当请求后端出现异常时厚，使用fallback方法返回值。
+			隔离（线程池隔离和信号量隔离）：
+				限制调用分布式服务的资源使用，某一个调用的服务出现问题不会影响其它调用服务。
+			熔断：
+				当失败率（网络故障、超时造成失败率高）达到阀值自动触发降级，熔断器触发开启融券会快速失败然后进行恢复。
+			缓存：
+				提供了请求缓存
+			请求合并
+	30 什么是线程池隔离?什么是信号量隔离?他们之间的区别是什么?什么情况下使用线程池隔离?什么情况下使用信号量隔离?
+		信号量隔离：
+			每次调用先后曾，当前请求通过计数信号量进行限制，当信号大于了最大请求数，进行限制，调用fallback接口快速返回，最重要的是调用信号量是同步的。
+		线程池隔离：
+			隔离的系度高，数百个实例需要隔离，此时用线程池做隔离开销过大通常这种都是非网络带哦用的情况下线程池隔离。每次开启一个单独线程运行。
+		
+		线程池适合绝大多数的场景，对依赖服务的网络请求的调用和访问，timeout这种问题。
+		信号量适合访问不是对外部依赖的访问，而不是对内部的一些比较复杂的业务逻辑访问，但是像这种访问，系统内部的代码，其实不涉及任何的网络请求，那么只是做信号量的普通限流就可以了。
+		因为不需要捕获timeout类似的问题。占用资源小只是一个计数器。
+	31 Turbine的作用是什么？Turbine默认监听端口是多少？
+		Turbine主要的功能是针对多个微服务进行监控，HystrixDashboard是针对一个微服务进行监控。
+		默认端口：9001
+	32 为什么要使用网关服务?网关解决了什么问题?
+		网关可以进行路由转发，过滤器、鉴权校验等。保护了后端的安全。
+	33 什么是服务跟踪Sleuth?
+		提供链路追踪：通过sleuth可以很清楚的看出一个而请求都经过了哪些服务。可以很方便的清理服务间的调用关系。
+		性能分析：通过seluth可以很方便的看出每个采样请求的耗时，分析出哪些服务调用比较耗时。当服务调用的耗时随着请求量的增大而增大时，也可以对服务的扩容提供一定的提醒作用。
+		数据分析，优化链路：对于频繁地调用某一个服务，或者并行地调用等，可以针对业务进行一些优化措施。
+		可视化错误：对于程序未捕捉地错误，可以在zipkin界面上看到。
+	34 介绍一下ELK,ELK的架构原理是什么?
+		ELK：主流的一种日志系统，提供了一整套解决方案，是分布式日志处理的不二首选。
+		ELK主要由：ElasticSearch、Logstash、Kibana三个架构组成。
+		 ElasticSearch主要用于搜索数据
+		 Logstash 主要用来日志的搜集、分析、过滤日志的工具。
+		 Kibana 也是一个开源和免费的工具，可以提供对日志分析的友好web界面
+		主要就是程序把日志文件传输给Logstash，它在将日志一并发送给ElasticSearch，最终在Kibana配置ElasticSearch关联，查看日志信息。
+	35 什么是Zipkin？Zipkin和ELK有什么区别？
+		zipkin是一款开源的分布式实时数据追踪系统，其主要功能是聚集来自各个异构系统的实时监控数据。
+		ELK提供了日志的管理，包含了收集、存储、搜索等，但是缺乏实时服务链路追踪。而zipkin刚好凝补了这个缺陷。
+	36 Zipkin有哪些事件类型？每种事件类型表示什么含义？
+		cs 客户端/消费端发起请求
+		cr 客户端/消费端接收到应答
+		sr 服务端/生成这接收到请求
+		ss 服务端/生产者发送应答。
+	37 什么是分布式事务?什么是XA协议?
+		分布式事务指的是事务的参与者、支持事务的服务器、资源服务器鞥以及处理事务的管理器分别位于不同的分布式系统的不同节点上。
+		XA协议作为资源管理器（数据库）与事务管理器的接口标准。
+	38 说说什么是TCC解决方案,TCC的优缺点
+		TCC是由支付宝叫故事提供的一种柔性解决分布式事务解决方案，主要包括三个步骤
+		Try：预留业务资源/数据校验
+		Confirm：确认执行业务操作
+		Cancel：取消执行业务操作
+	优点：
+		TCC让应用自己定义数据库操作的颗粒度，使得降低锁冲突，提高吞吐量。
+	缺点：
+		TCC对应用的侵入性强，改造成本大，实现单独打。
+	39 谈谈你对LCN分布式事务处理框架的理解
+		LCN 并不产生十五，LCN只是本地事务的协调工。
+
+

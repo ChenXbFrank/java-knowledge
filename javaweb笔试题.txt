@@ -1,0 +1,334 @@
+1  什么是HTML？HTML的常用标签有哪些？分别代表什么？
+	HTML 超文本标记语言
+	a 链接标签
+	p 段落
+	h1~h6 标题
+	input 表单标签
+	select 选择框
+	button 按钮
+	head 头部
+	body 主体信息
+2  表单标签都有哪些属性？都代表什么意思？
+	form 定义供用户输入的表单
+	input 定义输入域
+	textarea 定义文本域
+	label 定义输入标题
+	select 选择下拉框
+	option 定义下拉列表中的按钮
+	value 提交数据到服务器的值
+	name 为控件命名
+	checked 是否被默认选中
+	type 控件类型
+	id 控件id
+	disabled 标记控件不可用
+	autofocus 属性规定的在页面加载时候，域自动获得焦点
+	height width 设置高宽属性
+	min max 设置输入的最大长度最新奥长度等
+	multiple 规定input 元素中可以选择多个值
+	placeholder 在输入框内的简短的提示
+	required 规定必须在提交之前填写此域
+	setp 规定输入域合法数字的问题。
+3  input标签的type属性有哪些值？
+	color 用于选取颜色
+	date 选取日期
+	datetime 选取一个日期（UTC时间）
+	date-local 选取一个日期时间（无时区）
+	email 输入邮箱
+	month 选取一个月份
+	number 类型用于应该包含数值的输入域。
+	radio 单选框
+	password 密码框
+	text 文本
+	butotn 按钮
+	checkbox 复选框
+	submit 提交表单按钮
+	reset 重置表单内容按钮
+4  frameset标签中的name属性的作用是什么？
+	framename 在指定的框架中打开被链接的文档
+5  你是如何理解div标签的
+	DIV就是整个HTML的骨架，它的结构特点是盒模型结构，顾名思义就是盒子，盒子里面承载着HTML的精美内容
+6  什么是行元素，什么是块元素？
+	默认情况下，行内元素不会以新行开始，而块级元素会新起一行
+	一般情况下，行内元素只能包含数据和其它行内元素。，块级元素可以包含行内元素和其它块级元素。
+7  css的作用是什么？引入css的三种方式是什么？css样式的优先级别是什么？
+	CSS（Cascading Style Sheets）层叠样式表，css可以美化网页的元素，使得页面变得更加漂亮，相当于穿上了衣服
+	引入的三种方式：
+		1.行内样式 <h1 style="color:red;">style</h1>
+		2.内部样式表在head标签下边
+			<head>
+				<style type="text/css">
+					h3 {
+						color:red;
+						}
+				</style>
+			</head>
+		3.外部样式表
+			<link type="text/css" rel="styleSheet" href="css文件路径" >
+8  写出你熟知的css选择器并解释
+	.intro 选取所有class="intro“的元素
+	#id 选取所有id="id”的元素
+	* 选取所有元素
+	p 选取所有p元素
+	div.p 选取所有div元素和p元素
+	div p 选取div元素内的所有p元素
+	div>p选取所有父级元素是div的p标签
+	div+p 选取所有紧接着div元素的p标签
+	[target] 选取所有附带着target属性的元素
+	[target=blank]选取所有使用target="blank"的元素
+	a:link 选取所有未访问的链接
+	a:visited 选取所有访问过的链接
+	a:active 选取活动链接
+	a:hover 选择鼠标在链接上面时
+	input:focus 选择具有焦点的输入元素
+	:read-only 用于匹配设置readonly 只读属性的元素
+	:not(p) 选取所有非p元素的标签
+9  什么是盒子模型？任何一个html元素都有盒子模型么？
+	所有HTML元素可以看作盒子，在CSS中，boxmodel属于用来设计和布局时候使用。
+	css和模型本质上是一个盒子，封装周围的HTMl元素，包括：外边距 边框 内边距 内容
+	和莫i选哪个允许我们在其它元素和周围元素之间的空间放置元素。
+10 什么是定位，定位分为哪些，有什么区别？
+	在css中，定位可以使我们布局元素和给元素定位一个位置。
+	static：html元素的默认值，即没有定位，遵循正常文档流对象。
+	fixed：元素的位置相当于浏览器窗口是固定位置。即使窗口可以滚动，它也不会移动。
+		fixed定位使元素的位置与文档流无关，因此不占用空间，因此可以和其它元素重叠
+	relative：相对定位元素是相对于其正常位置。
+		移动相对定位元素，但它原本所占的空间不会改变。
+		相对定位元素经常被用来作为绝对定位元素的容器块。
+	absolute：绝对定位的元素的位置相对于最近已经定位的父级元素，如果元素没有已定位的父级元素，那么它的位置相对于html。
+		定位使元素的位置与文档流无关，因此不占据空间。
+		定位的元素和其它元素重叠。
+11 什么是JavaScript？如何引用JavaScript？
+	JavaScript是脚本语言，是一种轻量级的编程语言，是可以插入HTMl页面的编程代码。
+	引入：
+		1.可以直接在html页面插入javascript，使用<script></script>标签。
+		2.引入外部javascript文件，<script src="myscript.js"></script>
+12 JS的数据类型有哪些？JS中的变量是如何声明的？
+	数据类型：
+		值类型（基本类型）：
+			1.字符串(String)
+			2.数字(Number)
+			3.布尔(Bollean)
+			4.对空(Null)
+			5.未定义(Underfined)
+			6.Symbol
+		引用数据类型：
+			1.对象(Object)
+			2.数组(Array)
+			3.函数(Function)
+	
+	声明变量：var a =  5;
+13 JS中==和===的区别是什么？
+	简单来说 == 代表相同  === 代表严格相同
+	== 
+		如果两个值类型相等，那么则进行===运算
+		如果两个值类型不相等，则把值转换成相同得类型，在进行判断是否相等
+		如果一个为null 一个为undefined，那么相等。
+	===
+		如果类型不相等，则直接为false
+		如果两个值都是null或者undefined可以相等。
+14 说一下JS中BOM对象有哪些属性？作用是什么？
+	BOM（Broswer Object Model）浏览器对象模型
+	由5个对象组成：
+		Window:表示浏览器中打开得窗口，最顶层得对象，所有得公共函数和属性都是它得下级。
+		Navigator：浏览器对象
+		Screen：屏幕对象
+		History：浏览器历史对象
+		Location：地址对象
+	属性，比如：
+		window.innerHeight 浏览器窗口的内部高度
+		window.innerWidth  浏览器窗口的内部宽度
+15 说一下JS中window对象有哪些属性和方法？作用是什么？
+	方法：
+		window.open() 打开新的窗口
+		window.close() 关闭当前窗口
+		window.moveTo() 移动当前窗口
+		windwo.resizeTo()调整当前窗口的尺寸
+		window.document.getElementById("header"); 获取id为header的属性对象
+	属性：
+		window.innerHeight 浏览器窗口的内部高度
+		window.innerWidth  浏览器窗口的内部宽度
+16 编码题：使用原生JS操作dom元素写一个form表单（注意：是用js写，不是写html）
+	<!DOCTYPE html>
+		<head>
+			<script type="java/script>>
+				document.write(<form>表单：<input type="text"/></form>)
+			</script>
+		</head>
+		<body>
+		</body>
+	</html>
+17 jquery如何操作样式，请写出实例代码
+	$('div').css('color','pink')
+18 jquery如何操作元素属性？写出实例代码
+	$("#content").attr('href','arebirth.cn');
+19 jquery如何操作元素文本值，写出实例代码
+	$("#content").append('aaa')
+	$("#a").prepend("aaa")
+20 http协议的特性是什么？解释一下
+	1.支持客户/服务器模式
+	2.简单快速：客户向服务器请求服务时候，只需要传送请求方法和路径。请求方法常用的由get、post、head。每种方法规定了客户与服务器联系的类型不同。由于http协议简单，使得htpp服务器规模小，通信快
+	3.灵活：http允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。
+	4.无连接：无连接的含义是限制每次连接只处理一个请求，服务器处理完客户端的请求，并收到客户端给的响应后，即断开连接。采用这种方式可以节省传输时间。
+	5.无状态：HTTP协议是无状态协议。无状态协议对于事务处理美哦与记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器下不需要先前信息时他的应答速度更快。
+21 http协议有哪些常见的请求头，解释一下
+	Accept：向服务器申明客户端可以接收的媒体类型MIME资源
+	Accept-encoding：向服务器申明客户端接收的编码方式，通常为压缩方法
+	Cache-control：控制浏览器的缓存
+	Cookie：告诉服务器有关Session的信息，存储让服务器辨别用户身份的信息。
+	Refer：告诉服务器该页面从哪个页面链接的
+	User-agent：向服务器发送浏览器的版本、系统、应用程序的信息
+22 http协议有哪些常见的响应头，解释一下
+	Accept-ranges：表明自己是否接收获取某个实体的一部分，比如文件的一部分。
+	Content-length：HTTP消息实体的传输长度
+	Content-encoding：设置数据使用的编码类型（压缩类型）
+	Content-type：设置响应体的媒体资源类型MIME
+	Date：设置响应被服务器创建的时间
+	Status：设置HTTP的响应状态码
+23 http协议的常见的状态码有哪些？分别代表什么意思
+	200 成功响应
+	404 无法找到指定位置的资源。
+	405 请求方法不适用
+	500 服务器出现了问题
+	503 服务器维护不能相应
+24 什么是tomcat？市面上常见的servlet容器还有哪些？
+tomcat 服务器，用来运行java程序编写的web应用程序
+JBoss
+WebSphere
+WebLogic
+Jetty
+25 说说你理解的servlet，它实现了哪些功能
+	servlet是用Java编写的服务器端程序。而这些Servlet都实现了Servlet这个接口。
+	其主要功能在于交互式的浏览和修改数据，生成动态Web内容。Servlet运行于支持Java的应用服务器中。
+26 servlet常见的对象有哪些？
+	HttpServetlRequest
+	HttpServletResponse
+	Cookie
+	HttpSession
+	ServletContext
+27 说一下servlet的生命周期。servlet是单例么？
+	1.加载和实例化，Servlet负责加载和实例化Servlet，当客户端发送一个请求的时候服务器首先会查找内存中是否存在Servlet实例，存在直接读取，不存在创建一个
+	2.初始化，在servlet容器完成servlet实例化之后，servlet容器将会调用init方法进行初始化，而且仅会执行一次
+	3.提供服务，servlet初始化后就可以提供请求服务了，通过调用service方法进行服务请求。
+	4.销毁，servlet实例是由容器创建的所以销毁也是由容器来执行，通过调用destory方法来执行销毁。
+28 页面提交表单，提交到数据库里的数据却乱码了，该如何排查问题？
+	考虑传输过程中到服务器是否已经乱码了，如果乱码加以编码处理
+	再考虑是否是服务器的编码设置
+	最后考虑数据库的编码处理
+29 说说请求转发和请求重定向的联系和区别
+	请求转发：
+		由于只发送了一次请求所以url不变
+		转发是服务器内部转发，不能跳转到外部链接
+		可以卸载request和response
+	重定向：
+		由于发送了2次请求，所以url地址改变了
+		重定向可以跳转到任意地址，因为是客户端浏览器的请求
+		重定向跳转不能系带request，response
+30 说说你理解的servlet的作用域，servlet的作用域有哪些？生命周期和作用范围分别是？
+	application；
+		全局作用范围，整个应用程序间共享。生命周期直至程序结束
+	session：
+		会话作用域，当用户首次访问时，会产生一个新的会话，以后服务器就会记住这个会话，生命周期：超时默认30分钟或者服务器强制销毁
+	request：
+		请求作用域，就是客户端的一次请求
+	page：
+		一个jsp页面
+31 说说cookie是什么，有了session可不可以取消cookie？
+	cookie 就是访问某些网站后在本地存储一些关于网站的相关信息，下次访问的时候减少步骤提高效率。
+	session仅限于服务器端，cookie是客户端，都是一种会话技术
+	cookie因为保存在客户端所以安全隐患相比下更大，但是sesison保存服务器端过多的话，也会造成服务器的压力，有了cookie可以减少服务器的一些压力
+	所以cookie和sesison是两种不同的技术，各有优点不能取消。
+32 jsp是什么？有了servlet，为什么还需要jsp？
+	jsp实质上就是简化板的servlet，用来动态生成网页处理逻辑。
+	因为servlet是服务器端后端的技术，用来完全服务于后端逻辑，处理前端代码相比较之下苦难增加非常之多。
+	因此jsp基于servlet被分离了出来，这样可以更专注的处理前端逻辑，并用servlet处理后端，业务分层更加清晰。
+33 所有以.jsp结尾的请求都被谁处理了？
+	被服务器处理了，服务器接收到请求后会首先把jsp页面编译成servlet类，只有第一次请求时候才会被编译。
+34 jsp九大内置对象有哪些？
+	request
+	response
+	session
+	applicaiton
+	page
+	pageContext
+	config
+	exception
+	out
+35 jsp中的basepath的作用是什么？
+	basePath就是相当于给页面提供了一个默认的绝对路径
+	String path = request.getContextPath();
+	String bastPath = request.getSchem()+"://"+request.getServetName()+":"+request.getServetPort()+path+"/";
+	<base href="<%=basePath%>">
+36 什么是el表达式？他出现的目的是什么？
+	EL(Expression Language) 是为了使jsp写起来更加简单。
+	他的语法是:${EL表达式}
+37 具体说说你能用el表达式做什么？
+	获得普通的数
+	获得数组的数据
+	获得List集合的数据
+	获得Map集合的数据
+	获得cookie信息等等【；
+	
+38 什么是jstl表达式？它出现的目的是什么？
+	jstl是jsp的标准标签库，提供了日常开发使用的一些遍历判断等操作。
+	目的是为了提高开发的效率。
+39 你常用的jstl的标签有哪些，仔细说说你是如何使用它们的
+	out <c:out value="${code}" default="a"></c:out> 将一个对象输出到页面
+	set <c:set var="username" value="a" scope="request"></c:set> 向域中设置一个属性
+	remove <c:remove var="username" scope="session"></c:remove> 移除域中指定属性
+	if <c:if test="${empty uesrname}">aa</c:if> 判断
+	forEach <c:forEach begin="1" end="10" step="1" var="index">${index}</c:forEach> 遍历
+40 什么是ajax？使用ajax的优缺点是什么？
+	ajax 异步请求，实现网页局部刷新
+	优点：
+		页面无刷新技术，在页面内与服务器通信，给用户更棒的体验
+		使用异步方式与服务器通信，不需要打断用户操作，更迅速的响应能力
+	缺点：
+		ajax无法使得浏览器back回去。
+		安全问题，ajax就如同企业数据建立了一个通道。使得开发者不经意间汇报楼接口，容易被黑客攻击。
+41 手写jquery的ajax代码
+	$.ajax({
+		url: '地址',
+		type: '请求类型',
+		data: '数据',
+		dataType: '数据类型',
+		success:function(reuslt) {
+			
+		},
+		error:funciton() {
+			失败
+		}
+	
+	})
+42 servlet中的监听器有什么作用？
+	监听器Listener就是监听某个对象的状态变化的组件，
+	被监听的三个域对象：request session servletContext
+43 过滤器的作用是什么？如何书写一个过滤器并使其生效？
+	比如可以在客户端进行请求的时候如果用户没有登录，就可以直接过滤掉，禁止请求。
+	在web.xml中配置过滤器
+	<filter>
+		<filter-name>name</filter-name>
+		<filter-class>类的全限定名</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>过滤器name</filter-name>
+		<url-pattern>/过滤器拦截的地址范围</url-pattern>
+	</filter-mapping>
+	public class MyFilter implements Filter {
+
+		@Override
+		public void init(FilterConfig filterConfig) throws ServletException {
+
+		}
+
+		@Override
+		public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+			System.out.println("我是大门口保安");
+			//放行
+			filterChain.doFilter(servletRequest, servletResponse);
+		}
+
+		@Override
+		public void destroy() {
+
+		}
+	}
